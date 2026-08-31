@@ -1,113 +1,93 @@
-# SYARVA Marketplace
+# 🚗🏢 SYARVA Marketplace & Dealership Portal
 
-Marketplace properti & otomotif berbasis **Laravel 13** + **Blade** + **Tailwind CSS v4** (Vite) + **Alpine.js** + **Chart.js**.
+Platform marketplace otomotif dan properti modern berbasis **Laravel 12**, **Tailwind CSS v4**, **Alpine.js**, dan **Google Gemini AI**. Dirancang khusus untuk showroom resmi dealer mobil dan portal properti eksklusif.
 
-Fitur utama:
+---
 
-- **Publik** — beranda dengan listing unggulan, pencarian & filter (keyword, kategori, harga, lokasi, kamar, merek kendaraan, dll.), halaman kategori properti (rumah/tanah) & otomotif (mobil baru/second), detail listing dengan galeri foto, form inquiry pembeli, halaman tentang & kontak, sitemap.xml, robots.txt, SEO (meta OG/Twitter + JSON-LD).
-- **User / Seller** — registrasi, login, logout, dashboard statistik, kelola listing (buat/edit/hapus, galeri foto, set foto utama, kirim untuk review, arsip), daftar favorit, kotak masuk inquiry (tandai dibalas), profil, ubah password.
-- **Admin** — dashboard statistik & grafik (Chart.js), moderasi listing (approve/reject dengan alasan/featured/hapus), kelola pengguna (tambah/ubah status/role), kelola kategori, kelola lokasi (provinsi/kota/kecamatan), kelola semua inquiry, laporan (listing, pengguna, inquiry), pengaturan situs (website/SEO/kontak/sosial).
-- **Keamanan** — auth middleware, role admin (`EnsureUserIsAdmin`), akses data berbasis pemilik (seller hanya melihat listing/inquiry miliknya), CSRF, soft delete listing, validasi FormRequest, escaping Blade otomatis.
+## 🌟 Fitur Utama
 
-## Persyaratan
+### 🤖 1. AI PDF Brochure Parser (Ekstraktor Brosur Otomatis)
+- Ekstraksi otomatis spesifikasi teknis mobil Honda (mesin, dimensi, varian, transmisi, fitur keselamatan, dll.) dari file **PDF Brosur Resmi**.
+- Pemotongan otomatis gambar resolusi tinggi dari setiap halaman brosur PDF menggunakan **Python PyMuPDF**.
+- Pengisian data listing secara otomatis ke form admin menggunakan **Google Gemini AI**.
 
-- PHP 8.4+
-- Composer
-- Node.js 20+
-- MySQL 8 (atau SQLite untuk testing)
+### 💬 2. SYARVA AI Assistant (Chatbot Konsultasi Pintar)
+- Rekomendasi unit mobil dan properti secara kontekstual dan interaktif.
+- Pratinjau langsung kartu unit beserta harga dan foto thumbnail.
+- Tombol aksi cepat untuk langsung melanjutkan konsultasi ke **WhatsApp Sales Resmi**.
 
-## Instalasi
+### 📱 3. Mobile-First & Cross-Device Experience
+- Bilah kontak bawah interaktif (*Sticky Bottom Bar*) di layar smartphone.
+- Modal berbagi interaktif (*Share Modal*) ke WhatsApp, Facebook, Telegram, X (Twitter), dan Salin Tautan.
+- Navigasi super cepat dengan teknologi *Instant Link Pre-fetching* (0 ms latency).
+
+### 🛡️ 4. Keamanan & Isolasi Subdomain
+- Pemisahan domain publik (`syarva.id`) dan panel manajemen internal (`admin.syarva.id`).
+- Rate Limiting pada endpoint Auth, AI Chat, dan formulir kontak.
+- Proteksi CSRF, Enkripsi Password Bcrypt (Cost 12), dan sanitasi input Eloquent ORM.
+
+---
+
+## 🛠️ Tech Stack
+
+- **Backend:** PHP 8.4+, Laravel 12 (Eloquent ORM, Multi-Worker Support)
+- **Frontend:** Blade Templating, Tailwind CSS v4, Alpine.js, Vite
+- **AI & Automation:** Google Gemini 2.5 Flash API, Python 3 (PyMuPDF)
+- **Database:** MySQL 8+ (Normalisasi 3NF dengan Fulltext Indexing)
+
+---
+
+## 🚀 Panduan Instalasi Lokal
+
+1. **Clone Repositori:**
+   ```bash
+   git clone https://github.com/Rifkyyy17/syarva-marketplace.git
+   cd syarva-marketplace
+   ```
+
+2. **Instal Dependensi:**
+   ```bash
+   composer install
+   npm install
+   ```
+
+3. **Konfigurasi Environment:**
+   ```bash
+   cp .env.example .env
+   php artisan key:generate
+   ```
+   *Sesuaikan konfigurasi database (`DB_*`) dan kunci API Gemini (`GEMINI_API_KEY`) pada file `.env`.*
+
+4. **Migrasi Database & Seeder:**
+   ```bash
+   php artisan migrate --seed
+   php artisan storage:link
+   ```
+
+5. **Jalankan Aplikasi:**
+   ```bash
+   # Terminal 1: Vite Asset Compiler
+   npm run dev
+
+   # Terminal 2: Laravel Server
+   php artisan serve
+   ```
+
+---
+
+## 📦 Deployment ke Server Produksi (Linux VPS / Ubuntu)
+
+Proyek ini telah dilengkapi dengan skrip otomatisasi 1-klik:
 
 ```bash
-git clone <url-repo> syarva
-cd syarva
-
-composer install
-npm install
-
-cp .env.example .env
-php artisan key:generate
+# Berikan izin eksekusi dan jalankan deployment script
+chmod +x deploy.sh
+bash deploy.sh
 ```
 
-Konfigurasi `.env`:
+Template konfigurasi server web tersedia di `nginx.conf.example`.
 
-```
-APP_NAME=SYARVA
-APP_URL=http://localhost:8000
-APP_LOCALE=id
-DB_CONNECTION=mysql
-DB_DATABASE=syarva
-DB_USERNAME=root
-DB_PASSWORD=
-```
+---
 
-> Catatan: ekstensi `pdo_sqlite` diaktifkan untuk menjalankan test suite
-> (`php -d extension=pdo_sqlite vendor/bin/phpunit`).
-
-## Migrasi & Seeder
-
-```bash
-php artisan migrate --seed
-```
-
-Seeder mengisi: 1 admin, 3 seller, pengguna contoh, kategori (Properti → Rumah/Tanah, Otomotif → Mobil Baru/Second), lokasi (provinsi/kota/kecamatan), listing contoh + gambar placeholder, serta pengaturan situs.
-
-Akun default (ubah lewat `.env`):
-
-| Role   | Email             | Password |
-|--------|-------------------|----------|
-| Admin  | `admin@syarva.test` | `password` |
-| Seller | `andi@syarva.test` / `siti@syarva.test` / `budi@syarva.test` | `password` |
-
-Variabel seeder opsional: `SEEDER_ADMIN_EMAIL`, `SEEDER_ADMIN_PASSWORD`, `SEEDER_USER_PASSWORD`.
-
-## Menjalankan Aplikasi
-
-```bash
-npm run dev        # terminal 1: Vite (HMR)
-php artisan serve  # terminal 2: aplikasi (http://localhost:8000)
-```
-
-Untuk produksi:
-
-```bash
-npm run build
-php artisan optimize
-```
-
-## Menjalankan Test
-
-Suite test: `tests/Feature/*` (auth, listing, admin, inquiry, favorit, SEO) dengan SQLite in-memory (`phpunit.xml`).
-
-```bash
-# bila pdo_sqlite sudah aktif di php.ini:
-php artisan test
-
-# bila belum:
-php -d extension=pdo_sqlite vendor/bin/phpunit
-```
-
-## Struktur Penting
-
-```
-app/Http/Controllers/        # Public, Auth, User (seller), Admin
-app/Models/                  # Listing, Category, ListingImage, PropertyDetail,
-                             # VehicleDetail, Province, City, District, Inquiry, Favorite, Setting
-app/Services/                # InquiryService, FavoriteService, ListingService, dll.
-app/Http/Requests/           # FormRequest validasi
-app/Http/Middleware/EnsureUserIsAdmin.php
-resources/views/
-  components/                # layout (app/auth/user/admin) & komponen Blade
-  public/                    # halaman publik
-  user/                      # dashboard seller
-  admin/                     # dashboard admin
-routes/web.php               # rute publik & user
-routes/admin.php             # rute admin (prefix /admin)
-resources/css/app.css        # Tailwind v4
-resources/js/app.js, admin-charts.js
-database/seeders/            # DatabaseSeeder, UserSeeder, CategorySeeder, dsb.
-```
-
-## Lisensi
-
-[The MIT License (MIT)](https://opensource.org/licenses/MIT)
+## 📄 Lisensi
+Hak Cipta © 2026 **SYARVA Marketplace**. Semua hak dilindungi undang-undang.
