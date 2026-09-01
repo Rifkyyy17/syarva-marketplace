@@ -28,6 +28,30 @@ class StoreListingRequest extends FormRequest
                 'mileage' => $rawMileage !== '' ? (float) $rawMileage : 0,
             ]);
         }
+
+        $this->merge([
+            'province_id' => $this->input('province_id') ?: null,
+            'city_id' => $this->input('city_id') ?: null,
+            'district_id' => $this->input('district_id') ?: null,
+        ]);
+    }
+
+    public function messages(): array
+    {
+        return [
+            'category_id.required' => 'Kategori wajib dipilih.',
+            'category_id.exists' => 'Kategori yang dipilih tidak valid.',
+            'title.required' => 'Judul iklan wajib diisi.',
+            'price.required' => 'Harga wajib diisi.',
+            'price.numeric' => 'Harga harus berupa nominal angka valid.',
+            'description.required' => 'Deskripsi listing wajib diisi.',
+            'province_id.exists' => 'Provinsi yang dipilih tidak ditemukan.',
+            'city_id.exists' => 'Kota/Kabupaten yang dipilih tidak ditemukan.',
+            'district_id.exists' => 'Kecamatan yang dipilih tidak ditemukan.',
+            'images.*.image' => 'File harus berupa gambar valid.',
+            'images.*.mimes' => 'Format gambar harus JPG, PNG, atau WebP.',
+            'images.*.max' => 'Ukuran gambar maksimal 10 MB per file.',
+        ];
     }
 
     public function rules(): array

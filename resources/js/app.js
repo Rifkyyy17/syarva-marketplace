@@ -71,40 +71,60 @@ document.addEventListener('alpine:init', () => {
     }));
 
     Alpine.data('locationCascade', (initial = {}) => ({
-        provinceId: initial.province_id ?? '',
-        cityId: initial.city_id ?? '',
-        districtId: initial.district_id ?? '',
-        cities: [],
-        districts: [],
-        async loadCities() {
-            this.cityId = '';
-            this.districtId = '';
-            this.cities = [];
-            this.districts = [];
+        provinceId: String(initial.province_id || ''),
+        cityId: String(initial.city_id || ''),
+        districtId: String(initial.district_id || ''),
+        cities: initial.cities || [],
+        districts: initial.districts || [],
+        init() {
+            if (this.provinceId && (!this.cities || this.cities.length === 0)) {
+                this.loadCities(false);
+            }
+            if (this.cityId && (!this.districts || this.districts.length === 0)) {
+                this.loadDistricts(false);
+            }
+        },
+        async loadCities(resetSelection = true) {
+            if (resetSelection) {
+                this.cityId = '';
+                this.districtId = '';
+                this.cities = [];
+                this.districts = [];
+            }
 
             if (!this.provinceId) {
                 return;
             }
 
-            const res = await fetch(`/lokasi/kota/${this.provinceId}`, {
-                headers: { Accept: 'application/json' },
-            });
-            const json = await res.json();
-            this.cities = json.data ?? [];
+            try {
+                const res = await fetch(`/lokasi/kota/${this.provinceId}`, {
+                    headers: { Accept: 'application/json' },
+                });
+                const json = await res.json();
+                this.cities = json.data ?? [];
+            } catch (e) {
+                console.error('Gagal memuat kota:', e);
+            }
         },
-        async loadDistricts() {
-            this.districtId = '';
-            this.districts = [];
+        async loadDistricts(resetSelection = true) {
+            if (resetSelection) {
+                this.districtId = '';
+                this.districts = [];
+            }
 
             if (!this.cityId) {
                 return;
             }
 
-            const res = await fetch(`/lokasi/kecamatan/${this.cityId}`, {
-                headers: { Accept: 'application/json' },
-            });
-            const json = await res.json();
-            this.districts = json.data ?? [];
+            try {
+                const res = await fetch(`/lokasi/kecamatan/${this.cityId}`, {
+                    headers: { Accept: 'application/json' },
+                });
+                const json = await res.json();
+                this.districts = json.data ?? [];
+            } catch (e) {
+                console.error('Gagal memuat kecamatan:', e);
+            }
         },
     }));
 

@@ -127,9 +127,14 @@
                         <span class="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3.5 text-xs font-bold text-slate-400">
                             Rp
                         </span>
+                        @php
+                            $rawPrice = $old('price');
+                            $cleanPrice = ($rawPrice !== null && $rawPrice !== '') ? preg_replace('/[^\d]/', '', (string) $rawPrice) : '';
+                            $displayPrice = $cleanPrice !== '' ? number_format((float) $cleanPrice, 0, ',', '.') : '';
+                        @endphp
                         <input type="text" id="price" name="price" inputmode="numeric" required
-                               x-data="priceFormat('{{ $old('price') }}')"
-                               x-on:input="onInput($event)"
+                               value="{{ $displayPrice }}"
+                               x-on:input="$el.value = $el.value.replace(/\D/g, '').replace(/\B(?=(\d{3})+(?!\d))/g, '.')"
                                class="input pl-10 font-bold text-slate-900 {{ $errors->has('price') ? 'input-error' : '' }}" placeholder="cth: 318.500.000">
                     </div>
                     @error('price')
@@ -156,13 +161,23 @@
         </div>
     </div>
 
+    @php
+        $selectedProvinceId = $old('province_id');
+        $selectedCityId = $old('city_id');
+        $selectedDistrictId = $old('district_id');
+        $initialCities = $selectedProvinceId ? \App\Models\City::where('province_id', $selectedProvinceId)->orderBy('name')->get(['id', 'name']) : collect();
+        $initialDistricts = $selectedCityId ? \App\Models\District::where('city_id', $selectedCityId)->orderBy('name')->get(['id', 'name']) : collect();
+    @endphp
+
     <div class="card mt-6 p-6 sm:p-8">
         <h2 class="text-lg font-bold text-slate-900">2. Lokasi</h2>
 
         <div x-data="locationCascade({
-            province_id: '{{ $old('province_id') }}',
-            city_id: '{{ $old('city_id') }}',
-            district_id: '{{ $old('district_id') }}',
+            province_id: '{{ $selectedProvinceId }}',
+            city_id: '{{ $selectedCityId }}',
+            district_id: '{{ $selectedDistrictId }}',
+            cities: {{ $initialCities->toJson() }},
+            districts: {{ $initialDistricts->toJson() }},
         })" class="mt-6 space-y-4">
             <div class="grid gap-4 sm:grid-cols-3">
                 <div>
@@ -170,7 +185,9 @@
                     <select id="province_id" name="province_id" x-model="provinceId" x-on:change="loadCities()" class="input">
                         <option value="">Pilih Provinsi</option>
                         @foreach (\App\Models\Province::orderBy('name')->get() as $province)
-                            <option value="{{ $province->id }}">{{ $province->name }}</option>
+                            <option value="{{ $province->id }}" @selected((string) $selectedProvinceId === (string) $province->id)>
+                                {{ $province->name }}
+                            </option>
                         @endforeach
                     </select>
                 </div>
@@ -179,7 +196,7 @@
                     <select id="city_id" name="city_id" x-model="cityId" x-on:change="loadDistricts()" class="input">
                         <option value="">Pilih Kota</option>
                         <template x-for="city in cities" :key="city.id">
-                            <option :value="city.id" x-text="city.name"></option>
+                            <option :value="city.id" :selected="String(city.id) === String(cityId)" x-text="city.name"></option>
                         </template>
                     </select>
                 </div>
@@ -188,7 +205,7 @@
                     <select id="district_id" name="district_id" x-model="districtId" class="input">
                         <option value="">Pilih Kecamatan</option>
                         <template x-for="district in districts" :key="district.id">
-                            <option :value="district.id" x-text="district.name"></option>
+                            <option :value="district.id" :selected="String(district.id) === String(districtId)" x-text="district.name"></option>
                         </template>
                     </select>
                 </div>
