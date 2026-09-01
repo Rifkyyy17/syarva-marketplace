@@ -61,7 +61,7 @@
                                     </div>
                                     <div class="flex items-center justify-between gap-1 p-1.5 bg-white border-t border-slate-100">
                                         @if (! $image->is_primary)
-                                            <form method="POST" action="{{ route('admin.listings.images.primary', [$listing, $image]) }}">
+                                            <form method="POST" action="{{ \Illuminate\Support\Facades\Route::has('admin.listings.images.primary') ? route('admin.listings.images.primary', [$listing, $image]) : url('/admin/listings/'.$listing->id.'/images/'.$image->id.'/primary') }}">
                                                 @csrf
                                                 <button type="submit" class="rounded px-1.5 py-0.5 text-[10px] font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900" title="Jadikan Foto Utama">
                                                     Utama
@@ -71,7 +71,7 @@
                                             <span class="text-[10px] font-bold text-emerald-600 px-1">Utama</span>
                                         @endif
 
-                                        <form method="POST" action="{{ route('admin.listings.images.destroy', [$listing, $image]) }}">
+                                        <form method="POST" action="{{ \Illuminate\Support\Facades\Route::has('admin.listings.images.destroy') ? route('admin.listings.images.destroy', [$listing, $image]) : url('/admin/listings/'.$listing->id.'/images/'.$image->id) }}">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="rounded p-1 text-slate-400 hover:bg-red-50 hover:text-red-600"

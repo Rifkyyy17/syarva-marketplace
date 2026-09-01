@@ -467,8 +467,12 @@
                 'id' => $img->id,
                 'url' => $img->url,
                 'is_primary' => (bool)$img->is_primary,
-                'delete_url' => route('admin.listings.images.destroy', [$listing, $img]),
-                'primary_url' => route('admin.listings.images.primary', [$listing, $img]),
+                'delete_url' => \Illuminate\Support\Facades\Route::has('admin.listings.images.destroy')
+                    ? route('admin.listings.images.destroy', ['listing' => $listing->id, 'image' => $img->id])
+                    : url("/admin/listings/{$listing->id}/images/{$img->id}"),
+                'primary_url' => \Illuminate\Support\Facades\Route::has('admin.listings.images.primary')
+                    ? route('admin.listings.images.primary', ['listing' => $listing->id, 'image' => $img->id])
+                    : url("/admin/listings/{$listing->id}/images/{$img->id}/primary"),
             ])->values()->all()
             : [];
         $existingImagesJson = json_encode($existingImagesData);
