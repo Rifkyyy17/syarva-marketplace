@@ -36,24 +36,6 @@ class StoreListingRequest extends FormRequest
         ]);
     }
 
-    public function messages(): array
-    {
-        return [
-            'category_id.required' => 'Kategori wajib dipilih.',
-            'category_id.exists' => 'Kategori yang dipilih tidak valid.',
-            'title.required' => 'Judul iklan wajib diisi.',
-            'price.required' => 'Harga wajib diisi.',
-            'price.numeric' => 'Harga harus berupa nominal angka valid.',
-            'description.required' => 'Deskripsi listing wajib diisi.',
-            'province_id.exists' => 'Provinsi yang dipilih tidak ditemukan.',
-            'city_id.exists' => 'Kota/Kabupaten yang dipilih tidak ditemukan.',
-            'district_id.exists' => 'Kecamatan yang dipilih tidak ditemukan.',
-            'images.*.image' => 'File harus berupa gambar valid.',
-            'images.*.mimes' => 'Format gambar harus JPG, PNG, atau WebP.',
-            'images.*.max' => 'Ukuran gambar maksimal 10 MB per file.',
-        ];
-    }
-
     public function rules(): array
     {
         $category = Category::find($this->input('category_id'));
@@ -131,6 +113,9 @@ class StoreListingRequest extends FormRequest
         return [
             'category_id.required' => 'Pilih kategori listing.',
             'category_id.exists' => 'Kategori yang dipilih tidak valid.',
+            'province_id.exists' => 'Provinsi yang dipilih tidak valid.',
+            'city_id.exists' => 'Kota/Kabupaten yang dipilih tidak valid.',
+            'district_id.exists' => 'Kecamatan yang dipilih tidak valid.',
             'title.required' => 'Judul iklan listing wajib diisi.',
             'title.min' => 'Judul minimal 3 karakter.',
             'title.max' => 'Judul maksimal 255 karakter.',
