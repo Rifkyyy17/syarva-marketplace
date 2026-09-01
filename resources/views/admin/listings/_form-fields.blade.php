@@ -129,8 +129,16 @@
                         </span>
                         @php
                             $rawPrice = $old('price');
-                            $cleanPrice = ($rawPrice !== null && $rawPrice !== '') ? preg_replace('/[^\d]/', '', (string) $rawPrice) : '';
-                            $displayPrice = $cleanPrice !== '' ? number_format((float) $cleanPrice, 0, ',', '.') : '';
+                            if ($rawPrice !== null && $rawPrice !== '') {
+                                $str = preg_replace('/[.,]00$/', '', (string) $rawPrice);
+                                $cleanPrice = preg_replace('/[^\d]/', '', $str);
+                                if ((float) $cleanPrice > 9999999999999 && $listing?->price) {
+                                    $cleanPrice = (string) (int) round((float) $listing->price);
+                                }
+                                $displayPrice = $cleanPrice !== '' ? number_format((float) $cleanPrice, 0, ',', '.') : '';
+                            } else {
+                                $displayPrice = '';
+                            }
                         @endphp
                         <input type="text" id="price" name="price" inputmode="numeric" required
                                value="{{ $displayPrice }}"

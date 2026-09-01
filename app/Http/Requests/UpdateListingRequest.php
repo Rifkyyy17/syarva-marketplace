@@ -6,12 +6,16 @@ class UpdateListingRequest extends StoreListingRequest
 {
     protected function prepareForValidation(): void
     {
+        $rawPrice = (string) $this->input('price');
+        $str = preg_replace('/[.,]00$/', '', $rawPrice);
+        $cleanPrice = preg_replace('/[^\d]/', '', $str);
+
         $this->merge([
             'province_id' => $this->province_id ?: null,
             'city_id' => $this->city_id ?: null,
             'district_id' => $this->district_id ?: null,
             'primary_image_id' => ($this->primary_image_id && $this->primary_image_id !== 'null') ? (int) $this->primary_image_id : null,
-            'price' => $this->price !== null ? preg_replace('/[^\d]/', '', (string) $this->price) : null,
+            'price' => $cleanPrice !== '' ? (float) $cleanPrice : null,
         ]);
     }
 

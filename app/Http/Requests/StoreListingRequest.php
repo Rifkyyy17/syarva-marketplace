@@ -16,9 +16,11 @@ class StoreListingRequest extends FormRequest
     protected function prepareForValidation(): void
     {
         if ($this->has('price')) {
-            $rawPrice = preg_replace('/[^\d]/', '', (string) $this->input('price'));
+            $rawPrice = (string) $this->input('price');
+            $str = preg_replace('/[.,]00$/', '', $rawPrice);
+            $cleanDigits = preg_replace('/[^\d]/', '', $str);
             $this->merge([
-                'price' => $rawPrice !== '' ? (float) $rawPrice : null,
+                'price' => $cleanDigits !== '' ? (float) $cleanDigits : null,
             ]);
         }
 
