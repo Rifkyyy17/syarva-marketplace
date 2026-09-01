@@ -11,25 +11,23 @@
     @endphp
 
     {{-- Hero Header --}}
-    <section class="relative overflow-hidden bg-charcoal-900 py-16 sm:py-20 text-white">
-        <div class="absolute inset-0 pointer-events-none">
-            <div class="absolute -left-32 -top-32 size-96 rounded-full bg-primary-600/20 blur-3xl"></div>
-            <div class="absolute -bottom-40 right-0 size-[28rem] rounded-full bg-primary-700/15 blur-3xl"></div>
-        </div>
+    <section class="relative overflow-hidden border-b border-white/10 bg-[#090e1a] py-14 sm:py-20 text-white">
+        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_-10%,rgba(220,38,38,0.12),rgba(9,14,26,0))]"></div>
 
-        <div class="container-app relative text-center">
-            <div class="inline-flex items-center gap-2 rounded-full border border-primary-400/30 bg-primary-500/10 px-4 py-1.5 text-xs font-semibold text-primary-200 mb-4">
-                <x-icon name="sparkles" class="size-3.5"/>
-                Layanan Pelanggan &amp; Kemitraan
-            </div>
-            <h1 class="text-3xl font-extrabold tracking-tight sm:text-5xl text-white">
-                Hubungi Tim <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent-400 via-primary-300 to-primary-100">SYARVA</span>
+        <div class="container-app relative text-center max-w-2xl mx-auto">
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-white/15 bg-white/[0.04] px-3.5 py-1 text-xs font-semibold text-slate-300 backdrop-blur-sm mb-4">
+                <x-icon name="phone" class="size-3.5 text-slate-400"/>
+                Layanan Pelanggan &amp; Konsultasi Sales
+            </span>
+            <h1 class="text-3xl sm:text-4xl font-black tracking-tight text-white">
+                Hubungi Showroom &amp; Layanan <span class="text-red-500">{{ $siteName }}</span>
             </h1>
-            <p class="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base">
-                Punya pertanyaan seputar unit properti, promo mobil Honda terbaru, taksasi mobil bekas, atau ingin titip jual listing? Kami siap melayani Anda dengan ramah dan cepat.
+            <p class="mx-auto mt-3 text-xs sm:text-sm leading-relaxed text-slate-400">
+                Punya pertanyaan seputar ketersediaan unit, promo Honda terbaru, taksasi mobil bekas, atau konsultasi titip jual properti? Tim konsultan kami siap membantu Anda dengan cepat.
             </p>
         </div>
     </section>
+
 
     {{-- Main Content Section --}}
     <section class="container-app -mt-8 pb-16 sm:pb-20 relative z-10">

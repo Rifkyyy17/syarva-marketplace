@@ -74,10 +74,14 @@
                                 <td class="td hidden whitespace-nowrap sm:table-cell">{{ number_format($listing->view_count, 0, ',', '.') }}</td>
                                 <td class="td hidden whitespace-nowrap xl:table-cell">{{ $listing->created_at->translatedFormat('d M Y') }}</td>
                                 <td class="td text-right" x-data="{ open: false }">
-                                    <div class="relative inline-block text-left" @click.outside="open = false">
-                                        <button type="button" class="btn-outline btn-sm" @click="open = !open">
-                                            Aksi <x-icon name="chevron-down" class="size-3.5"/>
-                                        </button>
+                                    <div class="flex items-center justify-end gap-1.5">
+                                        <a href="{{ route('admin.listings.edit', $listing) }}" class="btn-outline btn-sm !p-2 text-slate-700 hover:text-red-600 hover:border-red-300" title="Edit Listing &amp; Foto">
+                                            <x-icon name="pencil" class="size-3.5"/>
+                                        </a>
+                                        <div class="relative inline-block text-left" @click.outside="open = false">
+                                            <button type="button" class="btn-outline btn-sm" @click="open = !open">
+                                                Aksi <x-icon name="chevron-down" class="size-3.5"/>
+                                            </button>
                                         <div x-show="open" x-transition class="absolute right-0 z-20 mt-1 w-48 overflow-hidden rounded-xl border border-slate-200 bg-white py-1 text-left shadow-lg" x-cloak>
                                             <a href="{{ route('admin.listings.show', $listing) }}" class="block px-4 py-2 text-sm text-slate-600 hover:bg-slate-50">
                                                 <x-icon name="eye" class="mr-1.5 inline size-4"/> Detail

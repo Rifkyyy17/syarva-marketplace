@@ -1,6 +1,6 @@
 @php
     $siteName = \App\Models\Setting::get('site_name', 'SYARVA Marketplace');
-    $tagline = \App\Models\Setting::get('site_tagline');
+    $tagline = \App\Models\Setting::get('site_tagline') ?: 'Ekosistem Jual Beli Properti & Mobil Honda Resmi Terpercaya';
     $whatsapp = \App\Models\Setting::get('contact_whatsapp', '6281234567890');
     $social = [
         'facebook' => \App\Models\Setting::get('social_facebook'),
@@ -15,46 +15,42 @@
     ];
 @endphp
 
-<footer class="mt-auto">
-    <div class="bg-charcoal-900">
-        <div class="container-app py-8">
-            <div class="flex flex-col items-center gap-4 rounded-2xl bg-whatsapp/10 px-6 py-8 text-center sm:flex-row sm:justify-between sm:text-left">
-                <div>
-                    <h3 class="text-lg font-bold text-white">Butuh Bantuan Langsung?</h3>
-                    <p class="mt-1 text-sm text-white/60">Chat WhatsApp Shara untuk konsultasi gratis sekarang juga.</p>
-                </div>
-                <a href="https://wa.me/{{ $whatsapp }}?text={{ urlencode('Halo Shara, saya butuh bantuan.') }}"
-                   target="_blank" rel="noopener"
-                   class="btn-whatsapp btn-lg shrink-0">
-                    <svg viewBox="0 0 24 24" class="size-5" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                    Chat WhatsApp
-                </a>
-            </div>
-        </div>
-
-        <div class="container-app grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
-            <div>
+<footer class="mt-auto border-t border-slate-200 bg-[#090e1a] text-white">
+    <div class="container-app py-12 lg:py-16">
+        <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
+            {{-- Column 1: Brand & Bio --}}
+            <div class="lg:col-span-2">
                 @php
                     $footerLogo = \App\Models\Setting::get('site_logo');
                 @endphp
                 <a href="{{ route('home') }}" class="flex items-center gap-2.5">
                     @if (!empty($footerLogo))
-                        <img src="{{ Storage::disk('public')->url($footerLogo) }}" alt="{{ $siteName }}" class="h-9 max-w-[180px] object-contain">
+                        <img src="{{ Storage::disk('public')->url($footerLogo) }}" alt="{{ $siteName }}" class="h-8 sm:h-9 max-w-[180px] object-contain">
                     @else
-                        <span class="grid size-9 place-items-center rounded-lg bg-primary-500 text-white">
-                            <svg viewBox="0 0 24 24" class="size-5" fill="currentColor" aria-hidden="true">
-                                <path d="M12 2 21 8l-1.6 1.2V21h-5v-6h-4.8v6H4.6V9.2L3 8z"/>
-                            </svg>
+                        <span class="grid size-9 place-items-center rounded-xl bg-red-600 text-white font-black text-sm shadow-xs">
+                            H
                         </span>
-                        <span class="text-lg font-extrabold tracking-tight text-white">{{ $siteName }}</span>
+                        <span class="text-lg font-black tracking-tight text-white">{{ $siteName }}</span>
                     @endif
                 </a>
-                <p class="mt-4 text-sm leading-relaxed text-white/50">{{ $tagline }}</p>
-                <div class="mt-5 flex gap-2">
+                <p class="mt-4 max-w-sm text-xs leading-relaxed text-slate-400">{{ $tagline }}</p>
+
+                <div class="mt-5 flex items-center gap-2">
+                    <span class="inline-flex items-center gap-1.5 rounded-md bg-white/[0.06] border border-white/10 px-2.5 py-1 text-[11px] font-semibold text-slate-300">
+                        <x-icon name="check-badge" class="size-3.5 text-red-500"/>
+                        Honda Certified Sales
+                    </span>
+                    <span class="inline-flex items-center gap-1.5 rounded-md bg-white/[0.06] border border-white/10 px-2.5 py-1 text-[11px] font-semibold text-slate-300">
+                        <x-icon name="shield" class="size-3.5 text-emerald-400"/>
+                        Listing Terverifikasi
+                    </span>
+                </div>
+
+                <div class="mt-6 flex gap-2">
                     @foreach ($social as $network => $url)
                         @if ($url)
                             <a href="{{ $url }}" target="_blank" rel="noopener" aria-label="{{ ucfirst($network) }}"
-                               class="grid size-9 place-items-center rounded-lg bg-white/5 text-white/40 transition-all hover:bg-primary-500 hover:text-white">
+                               class="grid size-8.5 place-items-center rounded-lg border border-white/10 bg-white/[0.04] text-slate-400 transition-all hover:border-white/20 hover:bg-white/10 hover:text-white">
                                 <x-icon :name="$network" class="size-4"/>
                             </a>
                         @endif
@@ -62,45 +58,74 @@
                 </div>
             </div>
 
+            {{-- Column 2: Layanan Otomotif --}}
             <div>
-                <h3 class="text-xs font-bold uppercase tracking-wider text-white/40">Layanan</h3>
-                <ul class="mt-4 space-y-3 text-sm">
-                    <li><a href="{{ route('listings.vehicle', 'baru') }}" class="text-white/60 transition-colors hover:text-white">Katalog Honda Baru</a></li>
-                    <li><a href="{{ route('pages.sell-car') }}" class="text-white/60 transition-colors hover:text-white">Taksasi Mobil Bekas</a></li>
-                    <li><a href="{{ route('pages.property') }}" class="text-white/60 transition-colors hover:text-white">Konsultasi Properti</a></li>
-                    <li><a href="{{ route('listings.property', 'rumah') }}" class="text-white/60 transition-colors hover:text-white">Jelajahi Rumah</a></li>
+                <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Otomotif Honda</p>
+                <ul class="mt-4 space-y-2.5 text-xs text-slate-400">
+                    <li><a href="{{ route('listings.vehicle', 'baru') }}" class="transition-colors hover:text-white">Katalog Honda Baru</a></li>
+                    <li><a href="{{ route('pages.sell-car') }}" class="transition-colors hover:text-white">Taksasi Mobil Bekas</a></li>
+                    <li><a href="https://wa.me/{{ $whatsapp }}?text={{ urlencode('Halo Admin, saya ingin info promo DP ringan dan simulasi angsuran Honda.') }}" target="_blank" rel="noopener" class="transition-colors hover:text-white">Simulasi Kredit &amp; DP</a></li>
+                    <li><a href="https://wa.me/{{ $whatsapp }}?text={{ urlencode('Halo Admin, saya ingin jadwal booking test drive Honda.') }}" target="_blank" rel="noopener" class="transition-colors hover:text-white">Booking Test Drive</a></li>
                 </ul>
             </div>
 
+            {{-- Column 3: Layanan Properti --}}
             <div>
-                <h3 class="text-xs font-bold uppercase tracking-wider text-white/40">Perusahaan</h3>
-                <ul class="mt-4 space-y-3 text-sm">
-                    <li><a href="{{ route('about') }}" class="text-white/60 transition-colors hover:text-white">Tentang Kami</a></li>
-                    <li><a href="{{ route('pages.property') }}" class="text-white/60 transition-colors hover:text-white">Titip Jual Properti</a></li>
+                <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Properti</p>
+                <ul class="mt-4 space-y-2.5 text-xs text-slate-400">
+                    <li><a href="{{ route('listings.property', 'rumah') }}" class="transition-colors hover:text-white">Katalog Rumah Tinggal</a></li>
+                    <li><a href="{{ route('listings.property', 'tanah') }}" class="transition-colors hover:text-white">Kavling &amp; Tanah SHM</a></li>
+                    <li><a href="{{ route('pages.property') }}" class="transition-colors hover:text-white">Konsultasi Titip Jual</a></li>
+                    <li><a href="{{ route('about') }}" class="transition-colors hover:text-white">Tentang SYARVA</a></li>
                 </ul>
             </div>
 
+            {{-- Column 4: Kontak & Showroom --}}
             <div>
-                <h3 class="text-xs font-bold uppercase tracking-wider text-white/40">Kontak</h3>
-                <ul class="mt-4 space-y-3 text-sm text-white/50">
-                    @if ($contact['address'])
-                        <li class="flex gap-2.5"><x-icon name="map-pin" class="mt-0.5 size-4 shrink-0 text-primary-400"/> {{ $contact['address'] }}</li>
-                    @endif
+                <p class="text-xs font-bold uppercase tracking-wider text-slate-400">Kontak Resmi</p>
+                <ul class="mt-4 space-y-3 text-xs text-slate-400">
                     @if ($contact['phone'])
-                        <li class="flex items-center gap-2.5"><x-icon name="phone" class="size-4 shrink-0 text-primary-400"/> {{ $contact['phone'] }}</li>
+                        <li class="flex items-center gap-2">
+                            <x-icon name="phone" class="size-3.5 shrink-0 text-slate-400"/>
+                            <span>{{ $contact['phone'] }}</span>
+                        </li>
                     @endif
                     @if ($contact['email'])
-                        <li class="flex items-center gap-2.5"><x-icon name="mail" class="size-4 shrink-0 text-primary-400"/> {{ $contact['email'] }}</li>
+                        <li class="flex items-center gap-2">
+                            <x-icon name="mail" class="size-3.5 shrink-0 text-slate-400"/>
+                            <a href="mailto:{{ $contact['email'] }}" class="truncate hover:text-white">{{ $contact['email'] }}</a>
+                        </li>
                     @endif
+                    @if ($contact['address'])
+                        <li class="flex items-start gap-2">
+                            <x-icon name="map-pin" class="mt-0.5 size-3.5 shrink-0 text-slate-400"/>
+                            <span class="leading-relaxed">{{ $contact['address'] }}</span>
+                        </li>
+                    @endif
+                    <li>
+                        <a href="https://wa.me/{{ $whatsapp }}?text={{ urlencode('Halo Sales SYARVA, saya butuh bantuan.') }}"
+                           target="_blank" rel="noopener"
+                           class="inline-flex items-center gap-2 rounded-lg bg-emerald-600/20 border border-emerald-500/30 px-3 py-1.5 text-xs font-semibold text-emerald-300 hover:bg-emerald-600/30 hover:text-emerald-200 transition">
+                            <x-icon name="whatsapp" class="size-3.5 text-emerald-400"/>
+                            <span>Chat WhatsApp Sales</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
     </div>
 
-    <div class="bg-charcoal-950">
-        <div class="container-app flex flex-col items-center justify-between gap-2 py-5 text-xs text-white/30 sm:flex-row">
-            <p>&copy; {{ date('Y') }} {{ $siteName }}. Semua hak dilindungi.</p>
-            <p>Dibangun dengan teknologi modern &amp; aman.</p>
+    <div class="border-t border-white/[0.06] bg-[#04070e]">
+        <div class="container-app flex flex-col items-center justify-between gap-3 py-4 text-[11px] text-slate-500 sm:flex-row">
+            <p>&copy; {{ date('Y') }} {{ $siteName }}. Hak cipta dilindungi undang-undang.</p>
+            <p class="flex items-center gap-3">
+                <a href="{{ route('about') }}" class="hover:text-slate-400">Tentang</a>
+                <span>&bull;</span>
+                <a href="{{ route('contact') }}" class="hover:text-slate-400">Kontak</a>
+                <span>&bull;</span>
+                <a href="{{ route('listings.index') }}" class="hover:text-slate-400">Semua Listing</a>
+            </p>
         </div>
     </div>
 </footer>
+

@@ -10,8 +10,11 @@ class UpdateListingRequest extends StoreListingRequest
 
         unset($rules['images']);
 
-        $rules['images'] = ['nullable', 'array', 'max:8'];
-        $rules['images.*'] = ['image', 'mimes:jpg,jpeg,png,webp', 'max:5120'];
+        $rules['images'] = ['nullable', 'array', 'max:20'];
+        $rules['images.*'] = ['image', 'mimes:jpg,jpeg,png,webp', 'max:10240'];
+        $rules['deleted_images'] = ['nullable', 'array'];
+        $rules['deleted_images.*'] = ['integer', 'exists:listing_images,id'];
+        $rules['primary_image_id'] = ['nullable', 'integer', 'exists:listing_images,id'];
 
         return $rules;
     }

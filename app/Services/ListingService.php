@@ -51,8 +51,27 @@ class ListingService
 
         $this->saveDetails($listing, $data);
 
+        // Process deleted images
+        if (! empty($data['deleted_images']) && is_array($data['deleted_images'])) {
+            $imagesToDelete = $listing->images()->whereIn('id', $data['deleted_images'])->get();
+            foreach ($imagesToDelete as $imageToDelete) {
+                $this->removeImage($imageToDelete);
+            }
+        }
+
+        // Add newly uploaded images
         if (! empty($images)) {
             $this->syncImages($listing, $images);
+        }
+
+        // Handle primary image designation
+        if (! empty($data['primary_image_id'])) {
+            $primaryImage = $listing->images()->find($data['primary_image_id']);
+            if ($primaryImage) {
+                $this->setPrimary($primaryImage);
+            }
+        } elseif (! $listing->images()->where('is_primary', true)->exists()) {
+            $listing->images()->orderBy('sort_order')->first()?->update(['is_primary' => true]);
         }
 
         return $listing;

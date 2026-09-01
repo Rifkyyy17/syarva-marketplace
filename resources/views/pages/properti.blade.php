@@ -6,53 +6,55 @@
     <x-slot:title>Konsultasi Properti — Jual & Beli Rumah</x-slot:title>
     <x-slot:description>Layanan konsultasi properti: titip jual atau cari rumah impian Anda.</x-slot:description>
 
-    <section class="bg-charcoal-900 py-12">
-        <div class="container-app text-center">
-            <span class="inline-flex items-center gap-2 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-4 py-1.5 text-xs font-semibold text-emerald-300">
-                <x-icon name="building" class="size-3.5"/>
-                Property Service
+    {{-- Page Header --}}
+    <section class="border-b border-white/10 bg-[#090e1a] py-14 text-white">
+        <div class="container-app text-center max-w-2xl mx-auto">
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-300">
+                <x-icon name="building" class="size-3.5 text-emerald-400"/>
+                Property Advisory &amp; Listing Service
             </span>
-            <h1 class="mt-4 text-3xl font-extrabold tracking-tight text-white sm:text-4xl">Konsultasi Properti</h1>
-            <p class="mt-3 text-sm text-white/60">Titip jual properti atau cari rumah impian Anda. Kami bantu prosesnya.</p>
+            <h1 class="mt-4 text-3xl font-black tracking-tight text-white sm:text-4xl">
+                Konsultasi Titip Jual &amp; Cari Properti
+            </h1>
+            <p class="mt-3 text-xs sm:text-sm text-slate-400 leading-relaxed">
+                Dapatkan pendampingan legalitas SHM, analisis taksasi nilai pasar, dan pemasaran properti profesional langsung bersama konsultan kami.
+            </p>
         </div>
     </section>
 
+    {{-- Form Section --}}
     <section class="container-app -mt-6 pb-16">
         <div class="mx-auto max-w-2xl">
-            <div class="rounded-2xl border border-gray-200 bg-white p-6 shadow-lg sm:p-8"
+            <div class="rounded-3xl border border-slate-200/80 bg-white p-6 shadow-sm sm:p-8"
                  x-data="propertyForm()" x-init="init()">
 
-                <div class="flex gap-2 rounded-xl bg-gray-100 p-1">
+                {{-- Mode Switcher (Jual vs Beli) --}}
+                <div class="grid grid-cols-2 gap-2 rounded-2xl bg-slate-100 p-1.5 border border-slate-200/60">
                     <button type="button" @click="mode = 'jual'"
-                            :class="mode === 'jual' ? 'bg-emerald-600 text-white shadow' : 'text-charcoal-600 hover:text-charcoal-900'"
-                            class="flex-1 rounded-lg py-2.5 text-sm font-semibold transition-all">
+                            :class="mode === 'jual' ? 'bg-slate-900 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'"
+                            class="rounded-xl py-2.5 text-xs font-bold transition-all">
                         Titip Jual Properti
                     </button>
                     <button type="button" @click="mode = 'beli'"
-                            :class="mode === 'beli' ? 'bg-emerald-600 text-white shadow' : 'text-charcoal-600 hover:text-charcoal-900'"
-                            class="flex-1 rounded-lg py-2.5 text-sm font-semibold transition-all">
+                            :class="mode === 'beli' ? 'bg-slate-900 text-white shadow-xs' : 'text-slate-600 hover:text-slate-900'"
+                            class="rounded-xl py-2.5 text-xs font-bold transition-all">
                         Cari / Beli Rumah
                     </button>
                 </div>
 
                 <form @submit.prevent="submit()" class="mt-6 space-y-5">
                     <div>
-                        <label class="label">Kategori Layanan</label>
-                        <input type="text" :value="mode === 'jual' ? 'Titip Jual Properti' : 'Cari / Beli Rumah'" class="input bg-gray-50" readonly>
+                        <label class="label text-xs font-bold text-slate-700">Area / Lokasi Target <span class="text-red-500">*</span></label>
+                        <input type="text" x-model="form.location" class="input text-xs sm:text-sm" placeholder="Contoh: Bogor Kota, Sentul, Cibinong, Depok" required>
                     </div>
 
                     <div>
-                        <label class="label">Lokasi / Area Target <span class="text-red-500">*</span></label>
-                        <input type="text" x-model="form.location" class="input" placeholder="Contoh: Bogor Kota, Cibinong, Depok" required>
-                    </div>
-
-                    <div>
-                        <label class="label">Tipe Properti <span class="text-red-500">*</span></label>
+                        <label class="label text-xs font-bold text-slate-700">Tipe Aset Properti <span class="text-red-500">*</span></label>
                         <div class="flex flex-wrap gap-2">
-                            <template x-for="type in ['Rumah Tinggal', 'Ruko', 'Tanah', 'Apartemen']">
+                            <template x-for="type in ['Rumah Tinggal', 'Kavling / Tanah', 'Ruko / Komersial', 'Apartemen']">
                                 <button type="button" @click="form.property_type = type"
-                                        :class="form.property_type === type ? 'bg-emerald-600 text-white border-emerald-600' : 'bg-white text-charcoal-700 border-gray-300 hover:border-emerald-400'"
-                                        class="rounded-full border px-4 py-2 text-xs font-semibold transition-all"
+                                        :class="form.property_type === type ? 'bg-slate-900 text-white border-slate-900 shadow-xs' : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300 hover:bg-slate-50'"
+                                        class="rounded-xl border px-3.5 py-2 text-xs font-bold transition-all"
                                         x-text="type">
                                 </button>
                             </template>
@@ -60,33 +62,43 @@
                     </div>
 
                     <div>
-                        <label class="label">Estimasi Budget / Harga <span class="text-red-500">*</span></label>
-                        <input type="text" x-model="form.budget" class="input" placeholder="Contoh: Rp 600 Juta - 1 Miliar" required>
+                        <label class="label text-xs font-bold text-slate-700">
+                            <span x-text="mode === 'jual' ? 'Ekspektasi Harga Jual' : 'Alokasi Budget Pembelian'"></span>
+                            <span class="text-red-500">*</span>
+                        </label>
+                        <input type="text" x-model="form.budget" class="input text-xs sm:text-sm" placeholder="Contoh: Rp 800 Juta - 1.5 Miliar" required>
                     </div>
 
                     <div class="grid grid-cols-3 gap-3">
                         <div>
-                            <label class="label">LT (m²)</label>
-                            <input type="number" x-model="form.land_area" class="input" placeholder="120">
+                            <label class="label text-xs font-bold text-slate-700">LT (m²)</label>
+                            <input type="number" x-model="form.land_area" class="input text-xs sm:text-sm" placeholder="120">
                         </div>
                         <div>
-                            <label class="label">LB (m²)</label>
-                            <input type="number" x-model="form.building_area" class="input" placeholder="90">
+                            <label class="label text-xs font-bold text-slate-700">LB (m²)</label>
+                            <input type="number" x-model="form.building_area" class="input text-xs sm:text-sm" placeholder="90">
                         </div>
                         <div>
-                            <label class="label">Kamar</label>
-                            <input type="number" x-model="form.bedrooms" class="input" placeholder="3">
+                            <label class="label text-xs font-bold text-slate-700">Kamar Tidur</label>
+                            <input type="number" x-model="form.bedrooms" class="input text-xs sm:text-sm" placeholder="3">
                         </div>
                     </div>
 
                     <div>
-                        <label class="label">Nama Lengkap <span class="text-red-500">*</span></label>
-                        <input type="text" x-model="form.name" class="input" placeholder="Nama Anda" required>
+                        <label class="label text-xs font-bold text-slate-700">Nama Lengkap Pemilik / Peminat <span class="text-red-500">*</span></label>
+                        <input type="text" x-model="form.name" class="input text-xs sm:text-sm" placeholder="Nama Anda" required>
                     </div>
 
-                    <button type="submit" class="btn-whatsapp w-full py-3 text-base font-bold" :disabled="!isFormValid">
-                        <svg viewBox="0 0 24 24" class="size-5" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-                        <span x-text="mode === 'jual' ? 'Kirim Data Properti ke WhatsApp' : 'Konsultasi Properti via WhatsApp'"></span>
+                    {{-- Live WhatsApp Preview Box --}}
+                    <div x-show="isFormValid" x-cloak class="rounded-2xl border border-slate-200 bg-slate-50 p-4">
+                        <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400">Pratinjau Pesan Konsultasi:</p>
+                        <p class="mt-2 text-xs font-mono text-slate-700 whitespace-pre-line leading-relaxed bg-white p-3 rounded-xl border border-slate-200/60"
+                           x-text="generateMessage()"></p>
+                    </div>
+
+                    <button type="submit" class="btn-whatsapp btn-lg w-full !py-3.5 justify-center shadow-sm" :disabled="!isFormValid">
+                        <x-icon name="whatsapp" class="size-5"/>
+                        <span x-text="mode === 'jual' ? 'Kirim Data Titip Jual ke WhatsApp' : 'Konsultasi Cari Properti via WhatsApp'"></span>
                     </button>
                 </form>
             </div>
@@ -113,19 +125,21 @@
                     return this.form.location && this.form.property_type && this.form.budget && this.form.name;
                 },
 
-                submit() {
-                    if (!this.isFormValid) return;
-
-                    const wa = '{{ $whatsappNumber }}';
+                generateMessage() {
                     const specs = [];
                     if (this.form.land_area) specs.push(`LT ${this.form.land_area} m²`);
                     if (this.form.building_area) specs.push(`LB ${this.form.building_area} m²`);
-                    if (this.form.bedrooms) specs.push(`${this.form.bedrooms} Kamar Tidur`);
+                    if (this.form.bedrooms) specs.push(`${this.form.bedrooms} Kamar`);
                     const specsStr = specs.length ? specs.join(', ') : '-';
+                    const modeLabel = this.mode === 'jual' ? 'Titip Jual Properti' : 'Cari / Beli Properti';
 
-                    const modeLabel = this.mode === 'jual' ? 'Jual Rumah' : 'Beli Rumah';
-                    const text = `Halo Shara, saya ingin konsultasi layanan properti:\n• Kategori : ${modeLabel}\n• Lokasi / Area : ${this.form.location}\n• Tipe Properti : ${this.form.property_type}\n• Budget / Harga : ${this.form.budget}\n• Spesifikasi : ${specsStr}\n• Nama : ${this.form.name}\n\nMohon bantuannya untuk info lebih lanjut. Terima kasih!`;
+                    return `Halo Sales SYARVA, saya ingin konsultasi properti:\n• Kategori: ${modeLabel}\n• Lokasi: ${this.form.location}\n• Tipe Aset: ${this.form.property_type}\n• Estimasi Nilai/Budget: ${this.form.budget}\n• Spesifikasi: ${specsStr}\n• Kontak a.n: ${this.form.name}\n\nMohon informasi langkah selanjutnya. Terima kasih!`;
+                },
 
+                submit() {
+                    if (!this.isFormValid) return;
+                    const wa = '{{ $whatsappNumber }}';
+                    const text = this.generateMessage();
                     window.open(`https://wa.me/${wa}?text=${encodeURIComponent(text)}`, '_blank');
                 },
             };
@@ -133,3 +147,4 @@
     </script>
     @endpush
 </x-layouts.app>
+

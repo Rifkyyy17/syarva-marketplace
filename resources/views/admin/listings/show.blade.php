@@ -2,9 +2,19 @@
     <x-slot:title>Detail Listing</x-slot:title>
     <x-slot:pageTitle>Detail Listing</x-slot:pageTitle>
 
-    <a href="{{ route('admin.listings.index') }}" class="btn-ghost btn-sm mb-4">
-        <x-icon name="chevron-left" class="size-4"/> Kembali
-    </a>
+    <div class="mb-4 flex flex-wrap items-center justify-between gap-3">
+        <a href="{{ route('admin.listings.index') }}" class="btn-ghost btn-sm">
+            <x-icon name="chevron-left" class="size-4"/> Kembali ke Daftar
+        </a>
+        <div class="flex items-center gap-2">
+            <a href="{{ route('listings.show', $listing->slug) }}" target="_blank" class="btn-outline btn-sm">
+                <x-icon name="external" class="size-4"/> Lihat di Web
+            </a>
+            <a href="{{ route('admin.listings.edit', $listing) }}" class="btn-primary btn-sm">
+                <x-icon name="pencil" class="size-4"/> Edit Listing &amp; Foto
+            </a>
+        </div>
+    </div>
 
     <div class="grid gap-6 lg:grid-cols-[1fr_340px]">
         <div class="min-w-0 space-y-6">
@@ -26,14 +36,60 @@
                     </div>
                 </div>
 
-                @if ($listing->images->count() > 1)
-                    <div class="flex gap-2 overflow-x-auto p-3 no-scrollbar">
-                        @foreach ($listing->images as $image)
-                            <img src="{{ $image->url }}" alt="" loading="lazy" class="size-20 shrink-0 rounded-lg border border-slate-200 object-cover">
-                        @endforeach
+                {{-- Photo Management Gallery Strip --}}
+                <div class="border-t border-slate-100 bg-slate-50/50 p-4">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                            <x-icon name="image" class="size-4 text-slate-500"/>
+                            Galeri Foto ({{ $listing->images->count() }})
+                        </h3>
+                        <a href="{{ route('admin.listings.edit', $listing) }}" class="text-xs font-semibold text-red-600 hover:text-red-700 flex items-center gap-1">
+                            <x-icon name="plus" class="size-3.5"/> Tambah / Edit Foto
+                        </a>
                     </div>
-                @endif
+                    @if ($listing->images->isNotEmpty())
+                        <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-6 gap-3">
+                            @foreach ($listing->images as $image)
+                                <div class="group relative overflow-hidden rounded-xl border {{ $image->is_primary ? 'border-emerald-500 ring-2 ring-emerald-500/20' : 'border-slate-200' }} bg-white shadow-xs">
+                                    <div class="aspect-4/3 bg-slate-100 relative">
+                                        <img src="{{ $image->url }}" alt="" loading="lazy" class="size-full object-cover">
+                                        @if ($image->is_primary)
+                                            <span class="absolute top-1 left-1 rounded-full bg-emerald-600 px-1.5 py-0.5 text-[9px] font-bold text-white shadow-xs">
+                                                Cover
+                                            </span>
+                                        @endif
+                                    </div>
+                                    <div class="flex items-center justify-between gap-1 p-1.5 bg-white border-t border-slate-100">
+                                        @if (! $image->is_primary)
+                                            <form method="POST" action="{{ route('admin.listings.images.primary', [$listing, $image]) }}">
+                                                @csrf
+                                                <button type="submit" class="rounded px-1.5 py-0.5 text-[10px] font-semibold text-slate-600 hover:bg-slate-100 hover:text-slate-900" title="Jadikan Foto Utama">
+                                                    Utama
+                                                </button>
+                                            </form>
+                                        @else
+                                            <span class="text-[10px] font-bold text-emerald-600 px-1">Utama</span>
+                                        @endif
+
+                                        <form method="POST" action="{{ route('admin.listings.images.destroy', [$listing, $image]) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="rounded p-1 text-slate-400 hover:bg-red-50 hover:text-red-600"
+                                                    @click.prevent="$dispatch('confirm-action', { form: $el.closest('form'), message: 'Hapus foto ini dari listing?' })"
+                                                    title="Hapus foto">
+                                                <x-icon name="trash" class="size-3.5"/>
+                                            </button>
+                                        </form>
+                                    </div>
+                                </div>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="text-xs text-slate-400 py-2">Belum ada foto yang diunggah.</p>
+                    @endif
+                </div>
             </div>
+
 
             <div class="card p-6">
                 <h2 class="text-base font-bold text-slate-900">Deskripsi</h2>
@@ -136,6 +192,12 @@
                         <p class="mt-1 text-sm text-red-800">{{ $listing->rejection_reason }}</p>
                     </div>
                 @endif
+
+                <div class="mt-4 pt-4 border-t border-slate-100">
+                    <a href="{{ route('admin.listings.edit', $listing) }}" class="btn-primary w-full justify-center">
+                        <x-icon name="pencil" class="size-4"/> Edit Data &amp; Foto Listing
+                    </a>
+                </div>
 
                 <form method="POST" action="{{ route('admin.listings.status', $listing) }}" class="mt-4 space-y-2">
                     @csrf

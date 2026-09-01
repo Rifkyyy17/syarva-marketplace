@@ -109,10 +109,76 @@ class ListingController extends Controller
         }
 
         $this->listingService->update($listing, $data, $images);
+        $this->clearListingCache($listing);
 
         return redirect()
             ->route('admin.listings.index')
             ->with('success', 'Listing berhasil diperbarui.');
+    }
+
+    public function destroyImage(Listing $listing, ListingImage $image): \Illuminate\Http\JsonResponse|RedirectResponse
+    {
+        if ($image->listing_id !== $listing->id) {
+            abort(404);
+        }
+
+        $this->listingService->removeImage($image);
+        $this->clearListingCache($listing);
+
+        if (request()->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Foto berhasil dihapus.',
+                'remaining' => $listing->images()->count(),
+            ]);
+        }
+
+        return back()->with('success', 'Foto berhasil dihapus.');
+    }
+
+    public function setPrimaryImage(Listing $listing, ListingImage $image): \Illuminate\Http\JsonResponse|RedirectResponse
+    {
+        if ($image->listing_id !== $listing->id) {
+            abort(404);
+        }
+
+        $this->listingService->setPrimary($image);
+        $this->clearListingCache($listing);
+
+        if (request()->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Foto utama berhasil diatur.',
+            ]);
+        }
+
+        return back()->with('success', 'Foto utama berhasil diatur.');
+    }
+
+    public function uploadImages(Request $request, Listing $listing): \Illuminate\Http\JsonResponse|RedirectResponse
+    {
+        $request->validate([
+            'images' => ['required', 'array', 'min:1', 'max:20'],
+            'images.*' => ['image', 'mimes:jpg,jpeg,png,webp', 'max:10240'],
+        ]);
+
+        $uploadedPaths = $this->imageService->uploadMany($request->file('images', []));
+        $this->listingService->syncImages($listing, $uploadedPaths);
+        $this->clearListingCache($listing);
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => count($uploadedPaths).' foto berhasil ditambahkan.',
+                'images' => $listing->images()->get()->map(fn ($img) => [
+                    'id' => $img->id,
+                    'url' => $img->url,
+                    'is_primary' => $img->is_primary,
+                ]),
+            ]);
+        }
+
+        return back()->with('success', count($uploadedPaths).' foto berhasil ditambahkan.');
     }
 
     public function approve(Listing $listing): RedirectResponse

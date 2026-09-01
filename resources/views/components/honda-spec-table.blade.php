@@ -122,9 +122,9 @@
         <div class="divide-y divide-slate-200">
             {{-- Group 1: MESIN (ENGINE) --}}
             <div>
-                <div class="bg-red-600 px-6 py-2 text-xs font-black uppercase tracking-wider text-white flex items-center justify-between">
-                    <span class="flex items-center gap-2"><x-icon name="gauge" class="size-3.5"/> MESIN (ENGINE)</span>
-                    <span class="text-[10px] font-semibold text-red-100">Spesifikasi Teknis</span>
+                <div class="bg-slate-100/90 border-y border-slate-200 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center justify-between">
+                    <span class="flex items-center gap-2 text-slate-900 font-bold"><x-icon name="gauge" class="size-3.5 text-red-600"/> MESIN (ENGINE)</span>
+                    <span class="text-[10px] font-semibold text-slate-500">Spesifikasi Teknis</span>
                 </div>
                 <div class="divide-y divide-slate-100 text-xs">
                     <div class="grid grid-cols-1 sm:grid-cols-3 p-3.5 hover:bg-slate-50 transition">
@@ -160,9 +160,9 @@
 
             {{-- Group 2: DIMENSI / UKURAN --}}
             <div>
-                <div class="bg-red-600 px-6 py-2 text-xs font-black uppercase tracking-wider text-white flex items-center justify-between">
-                    <span class="flex items-center gap-2"><x-icon name="ruler" class="size-3.5"/> DIMENSI &amp; UKURAN (DIMENSIONS)</span>
-                    <span class="text-[10px] font-semibold text-red-100">Milimeter (mm)</span>
+                <div class="bg-slate-100/90 border-y border-slate-200 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center justify-between">
+                    <span class="flex items-center gap-2 text-slate-900 font-bold"><x-icon name="ruler" class="size-3.5 text-red-600"/> DIMENSI &amp; UKURAN (DIMENSIONS)</span>
+                    <span class="text-[10px] font-semibold text-slate-500">Milimeter (mm)</span>
                 </div>
                 <div class="divide-y divide-slate-100 text-xs">
                     <div class="grid grid-cols-1 sm:grid-cols-3 p-3.5 hover:bg-slate-50 transition">
@@ -190,9 +190,9 @@
 
             {{-- Group 3: TRANSMISI & KEMUDI --}}
             <div>
-                <div class="bg-red-600 px-6 py-2 text-xs font-black uppercase tracking-wider text-white flex items-center justify-between">
-                    <span class="flex items-center gap-2"><x-icon name="settings" class="size-3.5"/> TRANSMISI &amp; KEMUDI</span>
-                    <span class="text-[10px] font-semibold text-red-100">Earth Dreams Tech</span>
+                <div class="bg-slate-100/90 border-y border-slate-200 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center justify-between">
+                    <span class="flex items-center gap-2 text-slate-900 font-bold"><x-icon name="settings" class="size-3.5 text-red-600"/> TRANSMISI &amp; KEMUDI</span>
+                    <span class="text-[10px] font-semibold text-slate-500">Earth Dreams Tech</span>
                 </div>
                 <div class="divide-y divide-slate-100 text-xs">
                     <div class="grid grid-cols-1 sm:grid-cols-3 p-3.5 hover:bg-slate-50 transition">
@@ -208,9 +208,9 @@
 
             {{-- Group 4: SUSPENSI, REM & BAN --}}
             <div>
-                <div class="bg-red-600 px-6 py-2 text-xs font-black uppercase tracking-wider text-white flex items-center justify-between">
-                    <span class="flex items-center gap-2"><x-icon name="car-back" class="size-3.5"/> SISTEM SUSPENSI, PENGEREMAN &amp; BAN</span>
-                    <span class="text-[10px] font-semibold text-red-100">Chassis &amp; Wheels</span>
+                <div class="bg-slate-100/90 border-y border-slate-200 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center justify-between">
+                    <span class="flex items-center gap-2 text-slate-900 font-bold"><x-icon name="car-back" class="size-3.5 text-red-600"/> SISTEM SUSPENSI, PENGEREMAN &amp; BAN</span>
+                    <span class="text-[10px] font-semibold text-slate-500">Chassis &amp; Wheels</span>
                 </div>
                 <div class="divide-y divide-slate-100 text-xs">
                     <div class="grid grid-cols-1 sm:grid-cols-3 p-3.5 hover:bg-slate-50 transition">
@@ -230,9 +230,9 @@
 
             {{-- Group 5: EKSTERIOR & PENCAHAYAAN --}}
             <div>
-                <div class="bg-red-600 px-6 py-2 text-xs font-black uppercase tracking-wider text-white flex items-center justify-between">
-                    <span class="flex items-center gap-2"><x-icon name="sparkles" class="size-3.5"/> EKSTERIOR &amp; PENCAHAYAAN</span>
-                    <span class="text-[10px] font-semibold text-red-100">Exterior Features</span>
+                <div class="bg-slate-100/90 border-y border-slate-200 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center justify-between">
+                    <span class="flex items-center gap-2 text-slate-900 font-bold"><x-icon name="sparkles" class="size-3.5 text-red-600"/> EKSTERIOR &amp; PENCAHAYAAN</span>
+                    <span class="text-[10px] font-semibold text-slate-500">Exterior Features</span>
                 </div>
                 <div class="divide-y divide-slate-100 text-xs">
                     <div class="grid grid-cols-1 sm:grid-cols-3 p-3.5 hover:bg-slate-50 transition">
@@ -256,9 +256,9 @@
 
             {{-- Group 6: INTERIOR & ENTERTAINMENT --}}
             <div>
-                <div class="bg-red-600 px-6 py-2 text-xs font-black uppercase tracking-wider text-white flex items-center justify-between">
-                    <span class="flex items-center gap-2"><x-icon name="home" class="size-3.5"/> INTERIOR &amp; ENTERTAINMENT</span>
-                    <span class="text-[10px] font-semibold text-red-100">Cabin Comfort</span>
+                <div class="bg-slate-100/90 border-y border-slate-200 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center justify-between">
+                    <span class="flex items-center gap-2 text-slate-900 font-bold"><x-icon name="home" class="size-3.5 text-red-600"/> INTERIOR &amp; ENTERTAINMENT</span>
+                    <span class="text-[10px] font-semibold text-slate-500">Cabin Comfort</span>
                 </div>
                 <div class="divide-y divide-slate-100 text-xs">
                     <div class="grid grid-cols-1 sm:grid-cols-3 p-3.5 hover:bg-slate-50 transition">
@@ -286,12 +286,12 @@
 
             {{-- Group 7: FITUR KESELAMATAN & HONDA SENSING™ --}}
             <div>
-                <div class="bg-red-600 px-6 py-2 text-xs font-black uppercase tracking-wider text-white flex items-center justify-between">
-                    <span class="flex items-center gap-2"><x-icon name="shield" class="size-3.5"/> FITUR KESELAMATAN &amp; HONDA SENSING™</span>
-                    <span class="text-[10px] font-semibold text-red-100">Advanced Safety Suite</span>
+                <div class="bg-slate-100/90 border-y border-slate-200 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center justify-between">
+                    <span class="flex items-center gap-2 text-slate-900 font-bold"><x-icon name="shield" class="size-3.5 text-red-600"/> FITUR KESELAMATAN &amp; HONDA SENSING™</span>
+                    <span class="text-[10px] font-semibold text-slate-500">Advanced Safety Suite</span>
                 </div>
                 <div class="divide-y divide-slate-100 text-xs">
-                    <div class="grid grid-cols-1 sm:grid-cols-3 p-3.5 bg-red-50/50 hover:bg-red-50 transition">
+                    <div class="grid grid-cols-1 sm:grid-cols-3 p-3.5 bg-red-50/40 hover:bg-red-50/70 transition">
                         <span class="font-extrabold text-red-900">Honda Sensing™ Technology</span>
                         <div class="sm:col-span-2 space-y-1">
                             <span class="font-bold text-red-700 block">Paket Keselamatan Aktif Terlengkap:</span>
@@ -330,9 +330,9 @@
 
             {{-- Group 8: SISTEM KEAMANAN (SECURITY) --}}
             <div>
-                <div class="bg-red-600 px-6 py-2 text-xs font-black uppercase tracking-wider text-white flex items-center justify-between">
-                    <span class="flex items-center gap-2"><x-icon name="key" class="size-3.5"/> SISTEM KEAMANAN (SECURITY)</span>
-                    <span class="text-[10px] font-semibold text-red-100">Anti-Theft System</span>
+                <div class="bg-slate-100/90 border-y border-slate-200 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center justify-between">
+                    <span class="flex items-center gap-2 text-slate-900 font-bold"><x-icon name="key" class="size-3.5 text-red-600"/> SISTEM KEAMANAN (SECURITY)</span>
+                    <span class="text-[10px] font-semibold text-slate-500">Anti-Theft System</span>
                 </div>
                 <div class="divide-y divide-slate-100 text-xs">
                     <div class="grid grid-cols-1 sm:grid-cols-3 p-3.5 hover:bg-slate-50 transition">
@@ -346,6 +346,7 @@
                 </div>
             </div>
         </div>
+
 
         {{-- Table Footer Note --}}
         <div class="bg-slate-50 p-4 text-[11px] text-slate-500 italic border-t border-slate-200">

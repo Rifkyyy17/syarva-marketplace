@@ -461,31 +461,168 @@
         </div>
     </div>
 
-    <div class="card mt-6 p-6 sm:p-8">
-        <h2 class="text-lg font-bold text-slate-900">
-            <span x-text="(categoryType === 'vehicle' && (categorySlug === 'mobil-baru' || categorySlug.includes('honda'))) ? '5. Foto Listing' : '4. Foto Listing'">4. Foto Listing</span>
-            <span class="text-red-500">*</span>
-        </h2>
-        <p class="mt-1 text-sm text-slate-500">Unggah minimal 1 foto (maksimal 8). Format JPG, PNG, WebP. Maksimal 5 MB per foto.</p>
+    @php
+        $existingImagesData = ($listing && $listing->images)
+            ? $listing->images->map(fn($img) => [
+                'id' => $img->id,
+                'url' => $img->url,
+                'is_primary' => (bool)$img->is_primary,
+                'delete_url' => route('admin.listings.images.destroy', [$listing, $img]),
+                'primary_url' => route('admin.listings.images.primary', [$listing, $img]),
+            ])->values()->all()
+            : [];
+        $existingImagesJson = json_encode($existingImagesData);
+        $initialPrimaryId = $listing?->images?->where('is_primary', true)->first()?->id ?? 'null';
+    @endphp
+
+    <div class="card mt-6 p-6 sm:p-8"
+         x-data="{
+             existingImages: {{ $existingImagesJson }},
+             deletedImages: [],
+             primaryImageId: {{ $initialPrimaryId }},
+             isDeleting: null,
+             setPrimary(id) {
+                 this.primaryImageId = id;
+                 this.existingImages.forEach(img => img.is_primary = (img.id === id));
+             },
+             removeExisting(id) {
+                 this.deletedImages.push(id);
+                 this.existingImages = this.existingImages.filter(img => img.id !== id);
+                 if (this.primaryImageId === id && this.existingImages.length > 0) {
+                     this.setPrimary(this.existingImages[0].id);
+                 } else if (this.existingImages.length === 0) {
+                     this.primaryImageId = null;
+                 }
+             },
+             async deleteImmediately(id, deleteUrl) {
+                 if (!confirm('Hapus foto ini secara permanen dari server?')) return;
+                 this.isDeleting = id;
+                 try {
+                     const res = await fetch(deleteUrl, {
+                         method: 'DELETE',
+                         headers: {
+                             'X-CSRF-TOKEN': document.querySelector('meta[name=csrf-token]').content,
+                             'Accept': 'application/json'
+                         }
+                     });
+                     const data = await res.json();
+                     if (data.success) {
+                         this.existingImages = this.existingImages.filter(img => img.id !== id);
+                         if (this.primaryImageId === id && this.existingImages.length > 0) {
+                             this.setPrimary(this.existingImages[0].id);
+                         } else if (this.existingImages.length === 0) {
+                             this.primaryImageId = null;
+                         }
+                     }
+                 } catch (e) {
+                     alert('Gagal menghapus foto: ' + e.message);
+                 } finally {
+                     this.isDeleting = null;
+                 }
+             }
+         }">
+
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 border-b border-slate-100 pb-4">
+            <div>
+                <h2 class="text-lg font-bold text-slate-900 flex items-center gap-2">
+                    <x-icon name="image" class="size-5 text-red-600"/>
+                    <span x-text="(categoryType === 'vehicle' && (categorySlug === 'mobil-baru' || categorySlug.includes('honda'))) ? '5. Foto & Galeri Listing' : '4. Foto & Galeri Listing'">4. Foto & Galeri Listing</span>
+                    <span class="text-red-500">*</span>
+                </h2>
+                <p class="mt-0.5 text-xs text-slate-500">Kelola foto yang sudah terunggah, tentukan foto cover utama, atau tambah foto baru.</p>
+            </div>
+            <div class="flex items-center gap-2">
+                <span class="badge border border-slate-200 bg-slate-50 text-slate-700 text-xs font-semibold">
+                    <span x-text="existingImages.length"></span> Foto Tersimpan
+                </span>
+            </div>
+        </div>
+
+        {{-- Hidden inputs for deleted images & primary image ID --}}
+        <template x-for="id in deletedImages" :key="id">
+            <input type="hidden" name="deleted_images[]" :value="id">
+        </template>
+        <input type="hidden" name="primary_image_id" :value="primaryImageId">
 
         {{-- Hidden inputs for PDF extracted images --}}
         <template x-for="(img, idx) in extractedImages" :key="img.path">
             <input type="hidden" name="extracted_images[]" :value="img.path">
         </template>
 
+        {{-- 1. Existing Uploaded Images Grid --}}
+        <div x-show="existingImages.length > 0" class="mt-5">
+            <div class="flex items-center justify-between mb-3">
+                <p class="text-xs font-bold uppercase tracking-wider text-slate-700 flex items-center gap-1.5">
+                    <x-icon name="check-badge" class="size-4 text-emerald-600"/>
+                    Foto Listing Saat Ini (<span x-text="existingImages.length"></span>)
+                </p>
+                <p class="text-[11px] text-slate-400">Klik "Jadikan Utama" untuk mengganti cover listing</p>
+            </div>
+
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
+                <template x-for="(img, idx) in existingImages" :key="img.id">
+                    <div class="group relative overflow-hidden rounded-2xl border transition-all"
+                         :class="img.is_primary ? 'border-emerald-500 ring-2 ring-emerald-500/20 bg-emerald-50/10' : 'border-slate-200 bg-white hover:border-slate-300'">
+                        
+                        {{-- Photo Thumbnail --}}
+                        <div class="aspect-4/3 bg-slate-100 relative overflow-hidden">
+                            <img :src="img.url" alt="" class="size-full object-cover">
+                            
+                            {{-- Cover Badge / Make Primary Button --}}
+                            <div class="absolute top-2 left-2 z-10">
+                                <template x-if="img.is_primary">
+                                    <span class="inline-flex items-center gap-1 rounded-full bg-emerald-600 px-2.5 py-1 text-[10px] font-bold text-white shadow-xs">
+                                        <x-icon name="check" class="size-3"/> Foto Utama
+                                    </span>
+                                </template>
+                                <template x-if="!img.is_primary">
+                                    <button type="button" @click="setPrimary(img.id)"
+                                            class="inline-flex items-center gap-1 rounded-full bg-slate-900/80 px-2 py-1 text-[10px] font-semibold text-white backdrop-blur-sm hover:bg-emerald-600 transition-colors shadow-xs">
+                                        <x-icon name="star" class="size-3"/> Jadikan Utama
+                                    </button>
+                                </template>
+                            </div>
+
+                            {{-- Delete Button --}}
+                            <div class="absolute top-2 right-2 z-10">
+                                <button type="button" @click="removeExisting(img.id)"
+                                        class="grid size-7 place-items-center rounded-full bg-red-600 text-white shadow-sm hover:bg-red-700 transition-transform hover:scale-105"
+                                        title="Hapus foto ini">
+                                    <x-icon name="trash" class="size-3.5"/>
+                                </button>
+                            </div>
+                        </div>
+
+                        {{-- Footer Info --}}
+                        <div class="flex items-center justify-between px-2.5 py-1.5 bg-white text-[11px] text-slate-500">
+                            <span class="font-medium" x-text="`Foto #${idx + 1}`"></span>
+                            <template x-if="img.is_primary">
+                                <span class="font-bold text-emerald-600 text-[10px]">COVER</span>
+                            </template>
+                        </div>
+                    </div>
+                </template>
+            </div>
+        </div>
+
+        {{-- Notice if all existing images deleted --}}
+        <div x-show="deletedImages.length > 0 && existingImages.length === 0" x-cloak class="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-3 text-xs text-amber-800">
+            Semua foto lama ditandai untuk dihapus. Silakan unggah minimal 1 foto baru di bawah ini.
+        </div>
+
         {{-- Extracted Images from PDF Gallery Grid --}}
-        <div x-show="extractedImages.length" x-cloak class="mt-4 rounded-2xl border border-primary-200 bg-primary-50/50 p-4">
+        <div x-show="extractedImages.length" x-cloak class="mt-5 rounded-2xl border border-primary-200 bg-primary-50/50 p-4">
             <div class="flex items-center justify-between gap-2 mb-3">
                 <span class="inline-flex items-center gap-1.5 text-xs font-bold text-primary-900">
                     <x-icon name="sparkles" class="size-3.5 text-primary-600"/>
-                    Foto Galeri Otomatis dari Halaman Brosur PDF (<span x-text="extractedImages.length"></span> Foto)
+                    Foto Halaman Brosur PDF (<span x-text="extractedImages.length"></span> Foto)
                 </span>
-                <span class="text-[11px] text-primary-700">Tersimpan otomatis saat listing disimpan</span>
+                <span class="text-[11px] text-primary-700">Tersimpan saat listing disimpan</span>
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <template x-for="(img, idx) in extractedImages" :key="img.path">
                     <div class="group relative overflow-hidden rounded-xl border border-primary-200 bg-white shadow-sm">
-                        <div class="aspect-[4/3] bg-slate-100">
+                        <div class="aspect-4/3 bg-slate-100">
                             <img :src="img.url" alt="" class="size-full object-cover">
                         </div>
                         <div class="flex items-center justify-between gap-1 px-2 py-1.5 bg-white">
@@ -500,27 +637,37 @@
             </div>
         </div>
 
-        <div x-data="uploadManager(8, 5120)" class="mt-5">
+        {{-- 2. Add New Photos Upload Dropzone --}}
+        <div x-data="uploadManager(20, 10240)" class="mt-6 border-t border-slate-100 pt-5">
+            <div class="mb-3 flex items-center justify-between">
+                <label class="label !mb-0 text-xs font-bold text-slate-700 flex items-center gap-1.5">
+                    <x-icon name="upload" class="size-4 text-slate-500"/>
+                    <span>Tambah Foto Baru (Upload / Drag &amp; Drop)</span>
+                </label>
+                <span class="text-[11px] text-slate-400">Format: JPG, PNG, WebP (Maks 10 MB/foto)</span>
+            </div>
+
             <input type="file" x-ref="fileInput" name="images[]" accept="image/jpeg,image/png,image/webp" multiple
                    x-on:change="handleFiles($event.target.files)" class="hidden" id="images-input">
 
             <label for="images-input"
-                   class="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50 px-6 py-8 text-center transition-colors hover:border-primary-400 hover:bg-primary-50"
-                   :class="dragging ? 'border-primary-500! bg-primary-50!' : ''"
+                   class="flex cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed border-slate-300 bg-slate-50/80 px-6 py-8 text-center transition-colors hover:border-slate-400 hover:bg-slate-100/80"
+                   :class="dragging ? 'border-red-500! bg-red-50/50!' : ''"
                    x-on:dragover.prevent="dragging = true"
                    x-on:dragleave="dragging = false"
                    x-on:drop.prevent="onDrop($event)">
-                <span class="grid size-11 place-items-center rounded-2xl bg-white text-primary-700 shadow-sm">
-                    <x-icon name="upload" class="size-5.5"/>
+                <span class="grid size-12 place-items-center rounded-2xl bg-white text-slate-700 shadow-xs border border-slate-200">
+                    <x-icon name="plus" class="size-6 text-red-600"/>
                 </span>
-                <span class="mt-2 text-xs sm:text-sm font-semibold text-slate-700">Atau unggah foto tambahan lainnya (Opsional)</span>
-                <span class="mt-0.5 text-[11px] text-slate-400">Maksimal 8 foto, 5 MB per foto</span>
+                <span class="mt-3 text-xs sm:text-sm font-bold text-slate-800">Klik untuk memilih foto baru atau seret file ke sini</span>
+                <span class="mt-1 text-[11px] text-slate-400">Bisa memilih banyak foto sekaligus (maksimal 20 total foto)</span>
             </label>
 
-            <div x-show="files.length" class="mt-4 grid grid-cols-3 gap-3 sm:grid-cols-4" x-cloak>
+            {{-- New Files Preview Grid --}}
+            <div x-show="files.length" class="mt-4 grid grid-cols-2 sm:grid-cols-4 gap-3" x-cloak>
                 <template x-for="file in files" :key="file.id">
-                    <div class="group relative overflow-hidden rounded-xl border border-slate-200 bg-white shadow-sm">
-                        <div class="aspect-[4/3] bg-slate-100">
+                    <div class="group relative overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-xs">
+                        <div class="aspect-4/3 bg-slate-100 relative">
                             <template x-if="file.url">
                                 <img :src="file.url" alt="" class="size-full object-cover">
                             </template>
@@ -529,10 +676,13 @@
                                     <span x-text="file.error"></span>
                                 </div>
                             </template>
+                            <span class="absolute top-2 left-2 rounded-full bg-blue-600 px-2 py-0.5 text-[9px] font-bold text-white shadow-xs">
+                                BARU
+                            </span>
                         </div>
-                        <div class="flex items-center justify-between gap-1 px-2 py-1.5">
-                            <span class="truncate text-[11px] text-slate-500" x-text="file.name"></span>
-                            <button type="button" class="shrink-0 rounded p-1 text-slate-400 hover:bg-red-50 hover:text-red-600" @click="remove(file.id)" aria-label="Hapus foto">
+                        <div class="flex items-center justify-between gap-1 px-2.5 py-1.5">
+                            <span class="truncate text-[11px] text-slate-600 font-medium" x-text="file.name"></span>
+                            <button type="button" class="shrink-0 rounded-full p-1 text-slate-400 hover:bg-red-50 hover:text-red-600" @click="remove(file.id)" aria-label="Hapus foto">
                                 <x-icon name="x" class="size-3.5"/>
                             </button>
                         </div>

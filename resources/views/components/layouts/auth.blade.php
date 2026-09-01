@@ -8,20 +8,27 @@
     <x-seo :title="$title ?? 'Masuk'"/>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="flex min-h-screen flex-col items-center justify-center bg-slate-100 px-4 py-10">
+<body class="flex min-h-screen flex-col items-center justify-center bg-slate-50 px-4 py-10">
+    @php
+        $authLogo = \App\Models\Setting::get('site_logo');
+        $siteName = \App\Models\Setting::get('site_name', 'SYARVA Marketplace');
+    @endphp
     <a href="{{ route('home') }}" class="mb-6 flex items-center gap-2.5">
-        <span class="grid size-10 place-items-center rounded-xl bg-primary-700 text-white">
-            <svg viewBox="0 0 24 24" class="size-5" fill="currentColor" aria-hidden="true">
-                <path d="M12 2 21 8l-1.6 1.2V21h-5v-6h-4.8v6H4.6V9.2L3 8z"/>
-            </svg>
-        </span>
-        <span class="text-xl font-extrabold tracking-tight text-slate-900">{{ \App\Models\Setting::get('site_name', 'SYARVA Marketplace') }}</span>
+        @if (!empty($authLogo))
+            <img src="{{ Storage::disk('public')->url($authLogo) }}" alt="{{ $siteName }}" class="h-9 max-w-[200px] object-contain">
+        @else
+            <span class="grid size-10 place-items-center rounded-xl bg-red-600 text-white font-black text-sm shadow-xs">
+                H
+            </span>
+            <span class="text-xl font-black tracking-tight text-slate-900">{{ $siteName }}</span>
+        @endif
     </a>
 
     <div class="w-full max-w-md">
         {{ $slot }}
     </div>
 
-    <p class="mt-8 text-xs text-slate-400">&copy; {{ date('Y') }} {{ \App\Models\Setting::get('site_name', 'SYARVA Marketplace') }}. Semua hak dilindungi.</p>
+    <p class="mt-8 text-xs text-slate-400">&copy; {{ date('Y') }} {{ $siteName }}. Semua hak dilindungi.</p>
 </body>
+
 </html>

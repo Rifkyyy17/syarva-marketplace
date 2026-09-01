@@ -34,6 +34,9 @@ $adminRoute->group(function () {
     Route::post('/listings/{listing}/status', [ListingController::class, 'changeStatus'])->name('listings.status');
     Route::post('/listings/{listing}/feature', [ListingController::class, 'toggleFeatured'])->name('listings.feature');
     Route::delete('/listings/{listing}', [ListingController::class, 'destroy'])->middleware('password.confirm')->name('listings.destroy');
+    Route::delete('/listings/{listing}/images/{image}', [ListingController::class, 'destroyImage'])->name('listings.images.destroy');
+    Route::post('/listings/{listing}/images/{image}/primary', [ListingController::class, 'setPrimaryImage'])->name('listings.images.primary');
+    Route::post('/listings/{listing}/images', [ListingController::class, 'uploadImages'])->name('listings.images.upload');
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');

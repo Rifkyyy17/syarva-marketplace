@@ -4,20 +4,20 @@
 
 <div x-data="aiChatbot" class="relative">
     {{-- Floating Toggle Button --}}
-    <div class="fixed {{ $isDetailPage ? 'bottom-20 lg:bottom-6' : 'bottom-3 sm:bottom-6' }} right-4 sm:right-6 z-50 flex items-center gap-2">
+    <div class="fixed {{ $isDetailPage ? 'bottom-6 lg:bottom-6' : 'bottom-4 sm:bottom-6' }} right-4 sm:right-6 z-50 flex items-center gap-2">
         <button type="button"
                 @click="toggleChat()"
-                class="group relative flex items-center gap-2 sm:gap-3 rounded-full bg-gradient-to-r from-slate-900 via-primary-950 to-charcoal-900 py-1.5 sm:py-2.5 pl-2 sm:pl-3.5 pr-3 sm:pr-5 text-white shadow-2xl ring-2 ring-primary-500/30 transition-all duration-300 hover:scale-105 hover:ring-primary-400/60 hover:shadow-primary-900/40 active:scale-95"
-                :class="open ? 'ring-primary-500 scale-105' : ''"
+                class="group relative flex items-center gap-2.5 rounded-full bg-slate-900 hover:bg-slate-800 py-2 sm:py-2.5 px-3.5 sm:px-4 text-white shadow-lg border border-slate-700/60 transition-all duration-200 hover:scale-105 active:scale-95"
+                :class="open ? 'ring-2 ring-slate-400 bg-slate-800' : ''"
                 aria-label="Tanya AI SYARVA">
-            <span class="relative flex size-8 sm:size-9 shrink-0 items-center justify-center rounded-full bg-gradient-to-br from-primary-500 to-accent-500 text-white shadow-md">
-                <x-icon name="sparkles" class="size-4 sm:size-4.5 animate-pulse"/>
-                <span class="absolute -top-0.5 -right-0.5 size-2 sm:size-2.5 rounded-full bg-emerald-400 ring-2 ring-slate-900"></span>
+            <span class="grid size-6.5 place-items-center rounded-full bg-white/10 text-white">
+                <x-icon name="sparkles" class="size-3.5 text-slate-200"/>
             </span>
             <div class="text-left">
-                <span class="block text-[9px] sm:text-[10px] font-semibold uppercase tracking-wider text-accent-300 leading-none">Asisten Cerdas</span>
-                <span class="block text-[11px] sm:text-xs font-extrabold text-white mt-0.5">Tanya AI SYARVA</span>
+                <span class="block text-[11px] sm:text-xs font-bold text-white leading-tight">Tanya AI</span>
+                <span class="block text-[9px] text-slate-400 font-medium leading-none mt-0.5">Asisten Listing</span>
             </div>
+            <span class="size-1.5 rounded-full bg-emerald-400"></span>
         </button>
     </div>
 
@@ -25,48 +25,48 @@
     <div x-show="open"
          x-cloak
          x-transition:enter="transition ease-out duration-200"
-         x-transition:enter-start="opacity-0 translate-y-4 scale-95"
+         x-transition:enter-start="opacity-0 translate-y-3 scale-98"
          x-transition:enter-end="opacity-100 translate-y-0 scale-100"
          x-transition:leave="transition ease-in duration-150"
          x-transition:leave-start="opacity-100 translate-y-0 scale-100"
-         x-transition:leave-end="opacity-0 translate-y-4 scale-95"
+         x-transition:leave-end="opacity-0 translate-y-3 scale-98"
          @click.outside="open = false"
-         class="fixed bottom-20 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[420px] max-h-[640px] h-[82vh] sm:h-[600px] flex flex-col rounded-3xl border border-slate-200/80 bg-white shadow-2xl overflow-hidden backdrop-blur-lg">
+         class="fixed bottom-18 sm:bottom-20 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[400px] max-h-[620px] h-[80vh] sm:h-[580px] flex flex-col rounded-3xl border border-slate-200 bg-white shadow-2xl overflow-hidden ring-1 ring-black/5">
 
         {{-- Header --}}
-        <div class="flex items-center justify-between border-b border-white/10 bg-gradient-to-r from-slate-900 via-primary-950 to-charcoal-900 px-5 py-4 text-white">
+        <div class="flex items-center justify-between border-b border-white/10 bg-[#090e1a] px-4 sm:px-5 py-3.5 text-white">
             <div class="flex items-center gap-3">
-                <span class="grid size-10 place-items-center rounded-2xl bg-gradient-to-br from-primary-500 to-accent-500 text-white shadow-md">
-                    <x-icon name="sparkles" class="size-5"/>
+                <span class="grid size-8 place-items-center rounded-xl bg-white/10 text-white">
+                    <x-icon name="sparkles" class="size-4 text-slate-200"/>
                 </span>
                 <div>
-                    <h3 class="text-sm font-extrabold text-white flex items-center gap-1.5">
+                    <h3 class="text-xs sm:text-sm font-bold text-white flex items-center gap-1.5">
                         SYARVA AI Assistant
                     </h3>
-                    <p class="text-[11px] text-emerald-400 flex items-center gap-1">
-                        <span class="size-1.5 rounded-full bg-emerald-400 animate-pulse"></span> Online &bull; Siap Rekomendasikan Unit
+                    <p class="text-[10px] text-emerald-400 flex items-center gap-1 mt-0.5">
+                        <span class="size-1.5 rounded-full bg-emerald-400"></span> Online &bull; Rekomendasi Unit &amp; Info OTR
                     </p>
                 </div>
             </div>
 
             <div class="flex items-center gap-1">
-                <button type="button" @click="resetChat()" class="rounded-lg p-1.5 text-white/60 hover:bg-white/10 hover:text-white transition" title="Mulai Percakapan Baru">
-                    <x-icon name="refresh" class="size-4"/>
+                <button type="button" @click="resetChat()" class="rounded-lg p-1.5 text-slate-400 hover:bg-white/10 hover:text-white transition" title="Mulai Baru">
+                    <x-icon name="refresh" class="size-3.5"/>
                 </button>
-                <button type="button" @click="open = false" class="rounded-lg p-1.5 text-white/60 hover:bg-white/10 hover:text-white transition" title="Tutup">
+                <button type="button" @click="open = false" class="rounded-lg p-1.5 text-slate-400 hover:bg-white/10 hover:text-white transition" title="Tutup">
                     <x-icon name="x" class="size-4"/>
                 </button>
             </div>
         </div>
 
         {{-- Messages Container --}}
-        <div x-ref="messagesContainer" class="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50">
+        <div x-ref="messagesContainer" class="flex-1 overflow-y-auto p-4 space-y-3.5 bg-slate-50/60">
             <template x-for="(msg, index) in messages" :key="index">
                 <div>
                     {{-- User Message --}}
                     <template x-if="msg.role === 'user'">
                         <div class="flex justify-end">
-                            <div class="max-w-[85%] rounded-2xl rounded-tr-none bg-gradient-to-r from-primary-800 to-primary-900 px-4 py-2.5 text-xs text-white shadow-sm">
+                            <div class="max-w-[85%] rounded-2xl rounded-tr-none bg-slate-900 px-4 py-2.5 text-xs text-white shadow-xs">
                                 <p x-text="msg.content" class="whitespace-pre-wrap leading-relaxed"></p>
                             </div>
                         </div>
@@ -75,28 +75,28 @@
                     {{-- Assistant Message --}}
                     <template x-if="msg.role === 'assistant'">
                         <div class="flex items-start gap-2.5">
-                            <span class="grid size-7 shrink-0 place-items-center rounded-full bg-primary-100 text-primary-700 text-xs font-bold mt-0.5">
+                            <span class="grid size-6.5 shrink-0 place-items-center rounded-lg bg-slate-200 text-slate-800 text-[10px] font-bold mt-0.5">
                                 AI
                             </span>
-                            <div class="max-w-[88%] space-y-3">
-                                <div class="rounded-2xl rounded-tl-none bg-white p-3.5 text-xs text-slate-700 shadow-sm border border-slate-200/80 leading-relaxed">
+                            <div class="max-w-[88%] space-y-2.5">
+                                <div class="rounded-2xl rounded-tl-none bg-white p-3.5 text-xs text-slate-800 shadow-xs border border-slate-200/80 leading-relaxed">
                                     <div x-html="formatMarkdown(msg.content)"></div>
                                 </div>
 
                                 {{-- Listing Recommendations Cards (if any) --}}
                                 <template x-if="msg.recommendations && msg.recommendations.length > 0">
                                     <div class="space-y-2">
-                                        <p class="text-[11px] font-bold text-slate-500 uppercase tracking-wider">Rekomendasi Unit Terkait:</p>
+                                        <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Rekomendasi Unit Terkait:</p>
                                         <template x-for="item in msg.recommendations" :key="item.id">
                                             <a :href="item.url" target="_blank"
-                                               class="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-2 transition hover:border-primary-400 hover:shadow-md group">
-                                                <img :src="item.image" :alt="item.title" x-on:error="$el.src = '{{ asset('images/placeholder.svg') }}'" class="size-14 rounded-lg object-cover bg-slate-100 shrink-0">
+                                               class="flex items-center gap-3 rounded-xl border border-slate-200 bg-white p-2 transition hover:border-slate-400 hover:shadow-sm group">
+                                                <img :src="item.image" :alt="item.title" x-on:error="$el.src = '{{ asset('images/placeholder.svg') }}'" class="size-12 rounded-lg object-cover bg-slate-100 shrink-0">
                                                 <div class="min-w-0 flex-1">
-                                                    <span class="inline-block text-[9px] font-bold text-primary-700 bg-primary-50 px-1.5 py-0.5 rounded" x-text="item.category"></span>
-                                                    <p class="truncate text-xs font-bold text-slate-900 group-hover:text-primary-700 mt-0.5" x-text="item.title"></p>
-                                                    <p class="text-xs font-extrabold text-primary-600 mt-0.5" x-text="item.price"></p>
+                                                    <span class="inline-block text-[9px] font-bold text-slate-600 bg-slate-100 px-1.5 py-0.5 rounded" x-text="item.category"></span>
+                                                    <p class="truncate text-xs font-bold text-slate-900 group-hover:text-slate-700 mt-0.5" x-text="item.title"></p>
+                                                    <p class="text-xs font-black text-slate-900 mt-0.5" x-text="item.price"></p>
                                                 </div>
-                                                <x-icon name="chevron-right" class="size-4 text-slate-400 group-hover:text-primary-600 shrink-0"/>
+                                                <x-icon name="chevron-right" class="size-4 text-slate-400 group-hover:text-slate-900 shrink-0"/>
                                             </a>
                                         </template>
                                     </div>
@@ -109,60 +109,56 @@
 
             {{-- Typing Indicator --}}
             <div x-show="loading" class="flex items-start gap-2.5" x-cloak>
-                <span class="grid size-7 shrink-0 place-items-center rounded-full bg-primary-100 text-primary-700 text-xs font-bold mt-0.5">
+                <span class="grid size-6.5 shrink-0 place-items-center rounded-lg bg-slate-200 text-slate-800 text-[10px] font-bold mt-0.5">
                     AI
                 </span>
-                <div class="rounded-2xl rounded-tl-none bg-white p-3 shadow-sm border border-slate-200/80">
+                <div class="rounded-2xl rounded-tl-none bg-white p-3 shadow-xs border border-slate-200/80">
                     <div class="flex items-center gap-1.5">
-                        <span class="size-2 rounded-full bg-primary-500 animate-bounce [animation-delay:-0.3s]"></span>
-                        <span class="size-2 rounded-full bg-primary-500 animate-bounce [animation-delay:-0.15s]"></span>
-                        <span class="size-2 rounded-full bg-primary-500 animate-bounce"></span>
+                        <span class="size-1.5 rounded-full bg-slate-400 animate-bounce [animation-delay:-0.3s]"></span>
+                        <span class="size-1.5 rounded-full bg-slate-400 animate-bounce [animation-delay:-0.15s]"></span>
+                        <span class="size-1.5 rounded-full bg-slate-400 animate-bounce"></span>
                     </div>
                 </div>
             </div>
 
             {{-- Quick Prompts Suggestions (if messages length is 1 initial greeting) --}}
             <div x-show="messages.length <= 1 && !loading" class="pt-2">
-                <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400 mb-2">Contoh Pertanyaan Cepat:</p>
+                <p class="text-[10px] font-bold uppercase tracking-wider text-slate-400 mb-2">Contoh Pertanyaan Cepat:</p>
                 <div class="flex flex-wrap gap-1.5">
                     <button type="button" @click="sendPrompt('Rekomendasi mobil Honda baru dengan promo DP ringan')"
-                            class="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-medium text-slate-700 hover:border-primary-500 hover:bg-primary-50 hover:text-primary-800 transition shadow-xs text-left">
+                            class="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-[11px] font-medium text-slate-700 hover:border-slate-400 hover:bg-slate-50 transition shadow-2xs text-left">
                         🚗 Rekomendasi Honda Baru
                     </button>
                     <button type="button" @click="sendPrompt('Cari rumah siap huni di Bogor budget di bawah 2 Miliar')"
-                            class="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-medium text-slate-700 hover:border-primary-500 hover:bg-primary-50 hover:text-primary-800 transition shadow-xs text-left">
+                            class="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-[11px] font-medium text-slate-700 hover:border-slate-400 hover:bg-slate-50 transition shadow-2xs text-left">
                         🏡 Rumah Siap Huni di Bogor
                     </button>
                     <button type="button" @click="sendPrompt('Bagaimana cara titip jual rumah atau mobil via WhatsApp Admin?')"
-                            class="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-medium text-slate-700 hover:border-primary-500 hover:bg-primary-50 hover:text-primary-800 transition shadow-xs text-left">
+                            class="rounded-lg border border-slate-200 bg-white px-2.5 py-1.5 text-[11px] font-medium text-slate-700 hover:border-slate-400 hover:bg-slate-50 transition shadow-2xs text-left">
                         ⭐ Titip Jual via WhatsApp
-                    </button>
-                    <button type="button" @click="sendPrompt('Jelaskan apa itu fitur keselamatan Honda Sensing')"
-                            class="rounded-xl border border-slate-200 bg-white px-3 py-1.5 text-[11px] font-medium text-slate-700 hover:border-primary-500 hover:bg-primary-50 hover:text-primary-800 transition shadow-xs text-left">
-                        🛡️ Fitur Honda Sensing
                     </button>
                 </div>
             </div>
         </div>
 
         {{-- Input Footer --}}
-        <div class="border-t border-slate-200/80 bg-white p-3">
+        <div class="border-t border-slate-200 bg-white p-3">
             <form @submit.prevent="sendMessage()" class="flex items-center gap-2">
                 <input type="text"
                        x-model="input"
                        :disabled="loading"
-                       placeholder="Ketik pertanyaan properti / mobil Honda..."
-                       class="flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 focus:border-primary-500 focus:bg-white focus:outline-none focus:ring-1 focus:ring-primary-500 disabled:opacity-50">
+                       placeholder="Tanya info Honda, rumah, atau DP OTR..."
+                       class="flex-1 rounded-xl border border-slate-200 bg-slate-50 px-3.5 py-2.5 text-xs text-slate-900 placeholder:text-slate-400 focus:border-slate-900 focus:bg-white focus:outline-none focus:ring-1 focus:ring-slate-900 disabled:opacity-50">
                 <button type="submit"
                         :disabled="loading || !input.trim()"
-                        class="grid size-9 place-items-center rounded-xl bg-primary-700 text-white shadow-sm transition hover:bg-primary-800 disabled:opacity-40 disabled:cursor-not-allowed">
-                    <x-icon name="send" class="size-4"/>
+                        class="grid size-9 place-items-center rounded-xl bg-slate-900 text-white shadow-xs transition hover:bg-slate-800 disabled:opacity-40 disabled:cursor-not-allowed">
+                    <x-icon name="send" class="size-3.5"/>
                 </button>
             </form>
-            <p class="mt-1.5 text-center text-[10px] text-slate-400">SYARVA AI Assistant &bull; Rekomendasi &amp; data listing real-time</p>
         </div>
     </div>
 </div>
+
 
 <script>
 document.addEventListener('alpine:init', () => {

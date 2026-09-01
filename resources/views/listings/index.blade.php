@@ -80,10 +80,10 @@
             </aside>
 
             <div>
-                <div class="mb-4 flex flex-wrap items-center gap-2" aria-label="Kategori">
+                <div class="mb-5 flex flex-wrap items-center gap-1.5" aria-label="Kategori">
                     <a href="{{ route('listings.index') }}"
-                       class="rounded-full border px-4 py-1.5 text-sm font-medium transition-colors {{ ! $category ? 'border-primary-700 bg-primary-700 text-white' : 'border-slate-300 bg-white text-slate-600 hover:border-primary-300' }}">
-                        Semua
+                       class="rounded-xl border px-3.5 py-1.5 text-xs font-semibold transition-all {{ ! $category ? 'border-slate-900 bg-slate-900 text-white shadow-xs' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50' }}">
+                        Semua Unit
                     </a>
                     @foreach ($subcategories as $sub)
                         <a href="{{ match ($sub->slug) {
@@ -93,11 +93,12 @@
                             'mobil-second' => route('listings.vehicle', 'second'),
                             default => route('listings.index'),
                         } }}"
-                           class="rounded-full border px-4 py-1.5 text-sm font-medium transition-colors {{ $category?->id === $sub->id ? 'border-primary-700 bg-primary-700 text-white' : 'border-slate-300 bg-white text-slate-600 hover:border-primary-300' }}">
+                           class="rounded-xl border px-3.5 py-1.5 text-xs font-semibold transition-all {{ $category?->id === $sub->id ? 'border-slate-900 bg-slate-900 text-white shadow-xs' : 'border-slate-200 bg-white text-slate-600 hover:border-slate-300 hover:bg-slate-50' }}">
                             {{ $sub->name }}
                         </a>
                     @endforeach
                 </div>
+
 
                 @if ($listings->isNotEmpty())
                     <div class="grid gap-5 sm:grid-cols-2 xl:grid-cols-3">

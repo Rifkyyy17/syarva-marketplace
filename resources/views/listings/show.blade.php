@@ -11,6 +11,33 @@
         $waUrl = $cleanWa ? 'https://wa.me/' . $cleanWa . '?text=' . urlencode($waText) : null;
     @endphp
 
+    @if (auth()->check() && auth()->user()->isAdmin())
+        <div class="border-b border-amber-300 bg-amber-50/90 py-2.5 px-4">
+            <div class="container-app flex flex-wrap items-center justify-between gap-3 text-xs">
+                <div class="flex items-center gap-2 text-amber-900 font-semibold">
+                    <span class="inline-flex size-2 rounded-full bg-amber-500 animate-pulse"></span>
+                    <span>Admin Mode: Anda memiliki akses cepat untuk mengedit atau menghapus listing ini.</span>
+                </div>
+                <div class="flex items-center gap-2">
+                    <a href="{{ route('admin.listings.edit', $listing) }}" class="inline-flex items-center gap-1.5 rounded-lg bg-slate-900 px-3 py-1.5 text-xs font-bold text-white hover:bg-slate-800 transition-all shadow-xs">
+                        <x-icon name="pencil" class="size-3.5"/> Edit Listing &amp; Gambar
+                    </a>
+                    <a href="{{ route('admin.listings.show', $listing) }}" class="inline-flex items-center gap-1.5 rounded-lg border border-amber-400 bg-white px-3 py-1.5 text-xs font-bold text-amber-900 hover:bg-amber-100 transition-all">
+                        <x-icon name="cog" class="size-3.5"/> Kelola di Admin
+                    </a>
+                    <form method="POST" action="{{ route('admin.listings.destroy', $listing) }}" class="inline-block">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="inline-flex items-center gap-1.5 rounded-lg bg-red-600 px-3 py-1.5 text-xs font-bold text-white hover:bg-red-700 transition-all shadow-xs"
+                                onclick="return confirm('Hapus listing ini dari marketplace?')">
+                            <x-icon name="trash" class="size-3.5"/> Hapus Listing
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    @endif
+
     {{-- Breadcrumb & Title Header --}}
     <section class="border-b border-slate-200 bg-white py-6">
         <div class="container-app">
@@ -356,20 +383,19 @@
 
             {{-- Right Column: Sticky Booking & Direct Deal Sidebar --}}
             <aside class="space-y-5 lg:sticky lg:top-24 lg:self-start">
-                <div class="rounded-3xl border border-slate-200 bg-white shadow-md overflow-hidden">
-                    {{-- Header Card (Dark Navy Blue) --}}
-                    <div class="relative overflow-hidden bg-charcoal-900 p-6 text-white">
-                        <div class="absolute -right-10 -top-10 size-32 rounded-full bg-primary-600/20 blur-xl"></div>
-                        <p class="text-[11px] font-bold uppercase tracking-wider text-primary-300">Harga Penawaran</p>
+                <div class="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
+                    {{-- Header Card (Obsidian Showroom Slate) --}}
+                    <div class="relative overflow-hidden bg-[#090e1a] p-6 text-white">
+                        <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Harga Penawaran</p>
                         <p class="mt-1.5 text-3xl sm:text-4xl font-black tracking-tight text-white">
                             Rp {{ number_format((float) $listing->price, 0, ',', '.') }}
                         </p>
                         @if ($listing->isVehicle())
-                            <p class="mt-2 text-xs font-medium text-slate-300">
+                            <p class="mt-2 text-xs font-medium text-slate-400">
                                 {{ $listing->vehicleDetail->condition_label }} &bull; {{ $listing->vehicleDetail->brand }} {{ $listing->vehicleDetail->model }}
                             </p>
                         @else
-                            <p class="mt-2 text-xs font-medium text-slate-300">
+                            <p class="mt-2 text-xs font-medium text-slate-400">
                                 {{ $listing->propertyDetail->certificate ?? 'Sertifikat Aman' }} &bull; {{ $listing->location_label }}
                             </p>
                         @endif
@@ -378,7 +404,7 @@
                     <div class="p-6 space-y-6">
                         {{-- Seller Profile Badge --}}
                         <div class="flex items-center gap-3.5 rounded-2xl bg-slate-50 p-4 border border-slate-100">
-                            <span class="grid size-12 shrink-0 place-items-center overflow-hidden rounded-2xl bg-primary-700 text-lg font-bold text-white shadow-xs">
+                            <span class="grid size-12 shrink-0 place-items-center overflow-hidden rounded-2xl bg-slate-900 text-lg font-bold text-white shadow-xs">
                                 @if ($listing->user->avatar)
                                     <img src="{{ Storage::disk('public')->url($listing->user->avatar) }}" alt="" class="size-full object-cover">
                                 @else
@@ -388,11 +414,11 @@
                             <div class="min-w-0 flex-1">
                                 <div class="flex items-center gap-1.5">
                                     <p class="truncate text-sm font-extrabold text-slate-900">{{ $listing->user->name }}</p>
-                                    <x-icon name="check-badge" class="size-4 text-primary-600 shrink-0"/>
+                                    <x-icon name="check-badge" class="size-4 text-red-600 shrink-0"/>
                                 </div>
-                                <p class="text-xs text-slate-500">Penjual / Admin Terverifikasi</p>
+                                <p class="text-xs text-slate-500">Sales / Penjual Terverifikasi</p>
                                 <p class="mt-0.5 text-[11px] font-semibold text-emerald-600 flex items-center gap-1">
-                                    <span class="size-1.5 rounded-full bg-emerald-500 animate-pulse"></span> Respon Cepat
+                                    <span class="size-1.5 rounded-full bg-emerald-500"></span> Respon Cepat &bull; Siap Konsultasi
                                 </p>
                             </div>
                         </div>
@@ -402,34 +428,33 @@
                             @if ($waUrl)
                                 <a href="{{ $waUrl }}"
                                    target="_blank" rel="noopener"
-                                   class="group flex items-center justify-center gap-3 w-full rounded-2xl bg-[#25D366] hover:bg-[#1EBE5D] p-4 text-white font-extrabold shadow-lg shadow-[#25D366]/20 transition-all hover:scale-[1.02] text-center">
-                                    <x-icon name="whatsapp" class="size-6 text-white group-hover:rotate-12 transition-transform"/>
+                                   class="btn-whatsapp w-full !py-3.5 !rounded-2xl justify-center text-center shadow-sm">
+                                    <x-icon name="whatsapp" class="size-5"/>
                                     <div class="text-left">
-                                        <p class="text-sm leading-tight">Chat WhatsApp Penjual</p>
-                                        <p class="text-[11px] font-normal text-white/90">Tanya unit, nego &amp; cek jadwal</p>
+                                        <p class="text-sm font-bold leading-tight">Chat WhatsApp Sales</p>
+                                        <p class="text-[11px] font-normal text-emerald-100">Tanya unit, simulasi kredit &amp; OTR</p>
                                     </div>
                                 </a>
                             @endif
 
                             @if ($listing->user->phone)
-                                <a href="tel:{{ $listing->user->phone }}" class="flex items-center justify-center gap-2.5 w-full rounded-2xl border border-slate-200 bg-white py-3 px-4 text-xs font-bold text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition">
-                                    <x-icon name="phone" class="size-4 text-primary-700"/> Hubungi Telepon: {{ $listing->user->phone }}
+                                <a href="tel:{{ $listing->user->phone }}" class="flex items-center justify-center gap-2.5 w-full rounded-2xl border border-slate-200 bg-white py-2.5 px-4 text-xs font-bold text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition">
+                                    <x-icon name="phone" class="size-4 text-slate-600"/> Hubungi Telepon: {{ $listing->user->phone }}
                                 </a>
                             @endif
                         </div>
 
-
-
                         {{-- Trust Guarantee Note --}}
-                        <div class="rounded-2xl bg-primary-50/60 p-3.5 text-center border border-primary-100">
-                            <p class="text-[11px] font-bold text-primary-900 flex items-center justify-center gap-1.5">
-                                <x-icon name="shield" class="size-3.5 text-primary-700"/> Transaksi Aman &amp; Terverifikasi
+                        <div class="rounded-2xl bg-slate-50 p-3.5 text-center border border-slate-100">
+                            <p class="text-[11px] font-bold text-slate-900 flex items-center justify-center gap-1.5">
+                                <x-icon name="shield" class="size-3.5 text-slate-700"/> Listing &amp; Harga Terverifikasi
                             </p>
-                            <p class="mt-0.5 text-[10px] text-slate-500">Bebas penipuan &bull; Hubungi langsung penjual resmi</p>
+                            <p class="mt-0.5 text-[10px] text-slate-500">Bebas markup &bull; Terhubung langsung ke sales resmi</p>
                         </div>
                     </div>
                 </div>
             </aside>
+
         </div>
     </section>
 
