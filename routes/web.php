@@ -45,6 +45,9 @@ Route::post('/ai/chat', [\App\Http\Controllers\AiChatController::class, 'chat'])
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 Route::get('/robots.txt', [RobotsController::class, 'index'])->name('robots');
 
+Route::get('/lokasi/kota/{province}', [\App\Http\Controllers\LocationController::class, 'citiesByProvince'])->name('locations.cities-by-province');
+Route::get('/lokasi/kecamatan/{city}', [\App\Http\Controllers\LocationController::class, 'districtsByCity'])->name('locations.districts-by-city');
+
 Route::middleware(['guest', 'throttle:auth'])->group(function () {
     Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
     Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login.store');
@@ -67,9 +70,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/email/verify', [\App\Http\Controllers\Auth\VerificationController::class, 'show'])->name('verification.notice');
     Route::get('/email/verify/{id}/{hash}', [\App\Http\Controllers\Auth\VerificationController::class, 'verify'])->name('verification.verify')->middleware('signed');
     Route::post('/email/resend', [\App\Http\Controllers\Auth\VerificationController::class, 'resend'])->name('verification.resend');
-
-    Route::get('/lokasi/kota/{province}', [\App\Http\Controllers\LocationController::class, 'citiesByProvince'])->name('locations.cities-by-province');
-    Route::get('/lokasi/kecamatan/{city}', [\App\Http\Controllers\LocationController::class, 'districtsByCity'])->name('locations.districts-by-city');
 
     Route::post('/favorites/{listing}/toggle', [FavoriteController::class, 'toggle'])->name('favorites.toggle');
 

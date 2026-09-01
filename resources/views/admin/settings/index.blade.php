@@ -185,7 +185,7 @@
                         <div class="grid gap-4 sm:grid-cols-3">
                             <div>
                                 <label for="icon_service_jual_mobil" class="label flex items-center gap-2 text-xs">
-                                    <x-icon name="{{ old('icon_service_jual_mobil', $settings['icon_service_jual_mobil'] ?? 'car-back') }}" class="size-4 text-amber-600"/>
+                                    <x-icon :name="old('icon_service_jual_mobil', $settings['icon_service_jual_mobil'] ?? 'car-back')" class="size-4 text-amber-600"/>
                                     Jual Mobil Bekas
                                 </label>
                                 <select id="icon_service_jual_mobil" name="icon_service_jual_mobil" class="input text-xs">
@@ -197,7 +197,7 @@
 
                             <div>
                                 <label for="icon_service_properti" class="label flex items-center gap-2 text-xs">
-                                    <x-icon name="{{ old('icon_service_properti', $settings['icon_service_properti'] ?? 'building') }}" class="size-4 text-emerald-600"/>
+                                    <x-icon :name="old('icon_service_properti', $settings['icon_service_properti'] ?? 'building')" class="size-4 text-emerald-600"/>
                                     Konsultasi Properti
                                 </label>
                                 <select id="icon_service_properti" name="icon_service_properti" class="input text-xs">
@@ -209,7 +209,7 @@
 
                             <div>
                                 <label for="icon_service_test_drive" class="label flex items-center gap-2 text-xs">
-                                    <x-icon name="{{ old('icon_service_test_drive', $settings['icon_service_test_drive'] ?? 'car-front') }}" class="size-4 text-primary-600"/>
+                                    <x-icon :name="old('icon_service_test_drive', $settings['icon_service_test_drive'] ?? 'car-front')" class="size-4 text-primary-600"/>
                                     Test Drive Honda
                                 </label>
                                 <select id="icon_service_test_drive" name="icon_service_test_drive" class="input text-xs">
