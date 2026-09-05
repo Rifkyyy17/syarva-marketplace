@@ -69,6 +69,13 @@ class AuthenticatedSessionController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
+        $adminDomain = config('app.admin_domain');
+        $adminHost = ! empty($adminDomain) ? (parse_url('http://' . $adminDomain, PHP_URL_HOST) ?: $adminDomain) : null;
+
+        if (! empty($adminHost) && $request->getHost() === $adminHost) {
+            return redirect()->route('login');
+        }
+
         return redirect('/');
     }
 }

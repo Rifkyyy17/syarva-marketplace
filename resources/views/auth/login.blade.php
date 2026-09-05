@@ -43,9 +43,8 @@
             <button type="submit" class="btn-primary w-full py-3!">Masuk</button>
         </form>
 
-        <p class="mt-6 text-center text-sm text-slate-500">
-            Belum punya akun?
-            <a href="{{ route('register') }}" class="font-semibold text-primary-700 hover:text-primary-800">Daftar sekarang</a>
+        <p class="mt-6 text-center text-xs text-slate-400">
+            Portal internal manajemen &amp; administrator SYARVA.
         </p>
     </div>
 </x-layouts.auth>

@@ -48,18 +48,40 @@ Route::get('/robots.txt', [RobotsController::class, 'index'])->name('robots');
 Route::get('/lokasi/kota/{province}', [\App\Http\Controllers\LocationController::class, 'citiesByProvince'])->name('locations.cities-by-province');
 Route::get('/lokasi/kecamatan/{city}', [\App\Http\Controllers\LocationController::class, 'districtsByCity'])->name('locations.districts-by-city');
 
-Route::middleware(['guest', 'throttle:auth'])->group(function () {
-    Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
-    Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login.store');
+$adminDomain = config('app.admin_domain');
+$adminHost = ! empty($adminDomain) ? (parse_url('http://' . $adminDomain, PHP_URL_HOST) ?: $adminDomain) : null;
 
-    Route::get('/register', fn () => redirect()->route('home'))->name('register');
+if (! empty($adminHost)) {
+    // Auth routes strictly on admin subdomain
+    Route::domain($adminHost)->middleware(['guest', 'throttle:auth'])->group(function () {
+        Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+        Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login.store');
 
-    Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
-    Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
+        Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
+        Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
 
-    Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
-    Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.store');
-});
+        Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+        Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.store');
+    });
+
+    // Hidden from the main domain (regular users get 404)
+    Route::any('/login', fn () => abort(404));
+    Route::any('/register', fn () => abort(404));
+} else {
+    // Fallback if ADMIN_DOMAIN is not yet configured
+    Route::middleware(['guest', 'throttle:auth'])->group(function () {
+        Route::get('/login', [AuthenticatedSessionController::class, 'create'])->name('login');
+        Route::post('/login', [AuthenticatedSessionController::class, 'store'])->name('login.store');
+
+        Route::get('/register', fn () => redirect()->route('home'))->name('register');
+
+        Route::get('/forgot-password', [PasswordResetLinkController::class, 'create'])->name('password.request');
+        Route::post('/forgot-password', [PasswordResetLinkController::class, 'store'])->name('password.email');
+
+        Route::get('/reset-password/{token}', [NewPasswordController::class, 'create'])->name('password.reset');
+        Route::post('/reset-password', [NewPasswordController::class, 'store'])->name('password.store');
+    });
+}
 
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');

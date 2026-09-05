@@ -10,11 +10,13 @@ use App\Http\Controllers\Admin\ReportController;
 use App\Http\Controllers\Admin\SettingController;
 use App\Http\Controllers\Admin\UserController;
 $adminDomain = config('app.admin_domain');
+$adminHost = ! empty($adminDomain) ? (parse_url('http://' . $adminDomain, PHP_URL_HOST) ?: $adminDomain) : null;
 
 $adminRoute = Route::middleware(['auth', 'admin'])->name('admin.');
 
-if (! empty($adminDomain)) {
-    $adminRoute->domain($adminDomain);
+if (! empty($adminHost)) {
+    $adminRoute->domain($adminHost);
+    Route::domain($adminHost)->middleware(['auth', 'admin'])->get('/admin', fn () => redirect()->route('admin.dashboard'));
 } else {
     $adminRoute->prefix('admin');
 }

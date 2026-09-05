@@ -168,11 +168,6 @@
                     </div>
                 </div>
             @else
-                <a href="{{ route('login') }}"
-                   class="inline-flex items-center gap-1 rounded-xl border border-white/20 bg-white/5 hover:bg-white/10 text-white px-3 py-1.5 text-xs font-semibold transition shadow-xs">
-                    <x-icon name="user" class="size-3 text-slate-300"/>
-                    <span>Masuk</span>
-                </a>
                 <a href="https://wa.me/{{ $siteWhatsapp }}?text={{ urlencode('Halo Sales SYARVA, saya ingin konsultasi unit mobil Honda / properti.') }}"
                    target="_blank" rel="noopener"
                    class="inline-flex items-center gap-1.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white px-3.5 py-1.5 text-xs font-bold transition shadow-xs active:scale-95">
@@ -275,11 +270,6 @@
                 </div>
             @else
                 <div class="pt-3 border-t border-white/10 flex flex-col gap-2">
-                    <a href="{{ route('login') }}"
-                       class="flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 hover:bg-white/20 py-2.5 px-4 text-xs font-bold text-white shadow-xs">
-                        <x-icon name="user" class="size-4 text-slate-300"/>
-                        <span>Masuk ke Akun</span>
-                    </a>
                     <a href="https://wa.me/{{ $siteWhatsapp }}?text={{ urlencode('Halo Sales SYARVA, saya ingin konsultasi unit mobil Honda / properti.') }}"
                        target="_blank" rel="noopener"
                        class="flex items-center justify-center gap-2 rounded-xl bg-emerald-600 hover:bg-emerald-500 py-2.5 px-4 text-xs font-bold text-white shadow-xs">
