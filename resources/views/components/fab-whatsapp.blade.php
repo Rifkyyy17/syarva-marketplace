@@ -3,7 +3,7 @@
     $isDetailPage = request()->routeIs('listings.show');
 @endphp
 
-<div x-data="{ open: false }" class="fixed {{ $isDetailPage ? 'hidden lg:block' : '' }} bottom-20 sm:bottom-22 right-4 sm:right-6 z-40">
+<div x-data="{ open: false }" class="fixed {{ $isDetailPage ? 'hidden lg:block' : '' }} bottom-5 right-4 sm:right-6 z-40">
     <div x-show="open" x-transition:enter="transition ease-out duration-150"
          x-transition:enter-start="opacity-0 scale-95 translate-y-2"
          x-transition:enter-end="opacity-100 scale-100 translate-y-0"

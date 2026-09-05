@@ -72,8 +72,8 @@
             {{-- Mobil Sehat Hati Tenang Benefits --}}
             <div class="rounded-2xl border border-white/10 bg-white/5 p-4 sm:p-5 flex flex-col justify-between backdrop-blur-sm">
                 <div>
-                    <p class="font-extrabold text-white text-xs sm:text-sm flex items-center gap-1.5 text-accent-400 mb-3">
-                        <x-icon name="sparkles" class="size-4"/> Mobil Sehat, Hati Tenang:
+                    <p class="font-extrabold text-white text-xs sm:text-sm flex items-center gap-1.5 text-emerald-400 mb-3">
+                        <x-icon name="shield" class="size-4"/> Mobil Sehat, Hati Tenang:
                     </p>
                     <ul class="space-y-2 text-xs text-slate-300">
                         <li class="flex items-start gap-2">
@@ -231,7 +231,7 @@
             {{-- Group 5: EKSTERIOR & PENCAHAYAAN --}}
             <div>
                 <div class="bg-slate-100/90 border-y border-slate-200 px-5 py-2.5 text-xs font-bold uppercase tracking-wider text-slate-900 flex items-center justify-between">
-                    <span class="flex items-center gap-2 text-slate-900 font-bold"><x-icon name="sparkles" class="size-3.5 text-red-600"/> EKSTERIOR &amp; PENCAHAYAAN</span>
+                    <span class="flex items-center gap-2 text-slate-900 font-bold"><x-icon name="eye" class="size-3.5 text-red-600"/> EKSTERIOR &amp; PENCAHAYAAN</span>
                     <span class="text-[10px] font-semibold text-slate-500">Exterior Features</span>
                 </div>
                 <div class="divide-y divide-slate-100 text-xs">

@@ -105,7 +105,7 @@
     </section>
 
     {{-- Main Content Section --}}
-    <section class="container-app py-8 sm:py-10">
+    <section class="container-app py-8 sm:py-10 pb-24 lg:pb-10">
         <div class="grid gap-8 lg:grid-cols-[1fr_390px] items-start">
             {{-- Left Column: Gallery & Details --}}
             <div class="min-w-0 space-y-8">
@@ -310,11 +310,11 @@
 
                     {{-- Penawaran Eksklusif & Fitur Honda --}}
                     @if ($listing->vehicleDetail->promo_package || $listing->vehicleDetail->warranty_info || $listing->vehicleDetail->brochure_url || !empty($listing->vehicleDetail->honda_features) || $listing->vehicleDetail->bonus_accessories)
-                        <div class="rounded-3xl border border-primary-200 bg-gradient-to-br from-primary-50/40 via-white to-white p-6 sm:p-8 shadow-xs">
-                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-primary-100 pb-5">
+                        <div class="rounded-3xl border border-slate-200 bg-slate-50/50 p-6 sm:p-8 shadow-xs">
+                            <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-200 pb-5">
                                 <div>
-                                    <span class="inline-flex items-center gap-1 rounded-full bg-primary-100 px-3 py-1 text-xs font-bold text-primary-800">
-                                        <x-icon name="sparkles" class="size-3.5 text-primary-600"/> Penawaran Spesial Dealer
+                                    <span class="inline-flex items-center gap-1.5 rounded-full bg-red-50 border border-red-200/80 px-3 py-1 text-xs font-bold text-red-700">
+                                        <x-icon name="tag" class="size-3.5 text-red-600"/> Penawaran Resmi Dealer
                                     </span>
                                     <h2 class="mt-2 text-xl font-extrabold text-slate-900">Promo, Garansi &amp; Keunggulan</h2>
                                 </div>
@@ -355,9 +355,9 @@
                                 @endif
 
                                 @if ($listing->vehicleDetail->bonus_accessories)
-                                    <div class="rounded-2xl bg-white p-4 sm:p-5 border border-primary-100 shadow-xs">
+                                    <div class="rounded-2xl bg-white p-4 sm:p-5 border border-slate-200/80 shadow-xs">
                                         <p class="font-extrabold text-slate-900 text-sm flex items-center gap-2">
-                                            <x-icon name="sparkles" class="size-4.5 text-primary-600"/> Bonus Pembelian &amp; Aksesoris Tambahan
+                                            <x-icon name="check-badge" class="size-4.5 text-red-600"/> Bonus Pembelian &amp; Aksesoris Tambahan
                                         </p>
                                         <p class="mt-2 text-slate-700 leading-relaxed whitespace-pre-line">{{ $listing->vehicleDetail->bonus_accessories }}</p>
                                     </div>
@@ -670,6 +670,36 @@
                         </button>
                     </div>
                 </div>
+            </div>
+        </div>
+    </div>
+
+    {{-- Mobile Sticky Bottom Action Bar --}}
+    <div class="fixed inset-x-0 bottom-0 z-40 border-t border-slate-200/90 bg-white/95 px-4 py-3 shadow-[0_-4px_20px_rgba(0,0,0,0.08)] backdrop-blur-lg lg:hidden">
+        <div class="container-app flex items-center justify-between gap-3 px-0">
+            <div class="min-w-0">
+                <span class="block text-[10px] font-bold uppercase tracking-wider text-slate-400">Harga Penawaran</span>
+                <p class="truncate text-base font-black text-slate-900 leading-tight">
+                    Rp {{ number_format((float) $listing->price, 0, ',', '.') }}
+                </p>
+            </div>
+
+            <div class="flex items-center gap-2 shrink-0">
+                @if ($listing->user->phone)
+                    <a href="tel:{{ $listing->user->phone }}"
+                       class="grid size-10 place-items-center rounded-xl border border-slate-200 bg-slate-50 text-slate-700 hover:bg-slate-100 active:scale-95 transition shadow-2xs"
+                       title="Telepon Sales">
+                        <x-icon name="phone" class="size-4"/>
+                    </a>
+                @endif
+
+                @if ($waUrl)
+                    <a href="{{ $waUrl }}" target="_blank" rel="noopener"
+                       class="btn-whatsapp !py-2.5 !px-4 !rounded-xl text-xs font-bold shadow-xs active:scale-95">
+                        <x-icon name="whatsapp" class="size-4.5"/>
+                        <span>Chat WhatsApp Sales</span>
+                    </a>
+                @endif
             </div>
         </div>
     </div>

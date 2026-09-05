@@ -18,8 +18,8 @@
 
     @if ($plans->isEmpty())
         <div class="card p-12 text-center">
-            <span class="mx-auto grid size-12 place-items-center rounded-2xl bg-primary-50 text-primary-600 shadow-sm">
-                <x-icon name="sparkles" class="size-6"/>
+            <span class="mx-auto grid size-12 place-items-center rounded-2xl bg-slate-100 text-slate-700 shadow-xs">
+                <x-icon name="tag" class="size-6"/>
             </span>
             <h3 class="mt-4 text-base font-bold text-slate-900">Belum ada paket membership</h3>
             <p class="mt-1 text-sm text-slate-500">Buat paket pertama Anda untuk mulai memonetisasi platform listing ini.</p>
@@ -35,7 +35,7 @@
                 <div class="card relative flex flex-col justify-between overflow-hidden border transition hover:shadow-md {{ $plan->is_featured ? 'border-primary-500 ring-2 ring-primary-500/20' : 'border-slate-200' }}">
                     @if ($plan->badge_label)
                         <div class="absolute right-4 top-4">
-                            <span class="rounded-full bg-gradient-to-r from-primary-600 to-primary-700 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white shadow-sm">
+                            <span class="rounded-full bg-slate-900 px-3 py-1 text-[11px] font-extrabold uppercase tracking-wider text-white shadow-xs">
                                 {{ $plan->badge_label }}
                             </span>
                         </div>

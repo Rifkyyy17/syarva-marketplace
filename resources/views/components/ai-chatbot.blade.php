@@ -1,23 +1,21 @@
 @php
     $isDetailPage = request()->routeIs('listings.show');
+    $welcomeMessage = \App\Models\Setting::get('ai_welcome_message') ?: 'Halo! Saya asisten virtual SYARVA. Butuh bantuan mencari unit mobil Honda, taksasi mobil bekas, info properti SHM, atau simulasi kredit? Silakan ketik pertanyaan Anda.';
 @endphp
 
 <div x-data="aiChatbot" class="relative">
     {{-- Floating Toggle Button --}}
-    <div class="fixed {{ $isDetailPage ? 'bottom-6 lg:bottom-6' : 'bottom-4 sm:bottom-6' }} right-4 sm:right-6 z-50 flex items-center gap-2">
+    <div class="fixed {{ $isDetailPage ? 'hidden lg:flex bottom-5 right-22' : 'bottom-19 sm:bottom-21 right-4 sm:right-6 flex' }} z-30 items-center">
         <button type="button"
                 @click="toggleChat()"
-                class="group relative flex items-center gap-2.5 rounded-full bg-slate-900 hover:bg-slate-800 py-2 sm:py-2.5 px-3.5 sm:px-4 text-white shadow-lg border border-slate-700/60 transition-all duration-200 hover:scale-105 active:scale-95"
-                :class="open ? 'ring-2 ring-slate-400 bg-slate-800' : ''"
-                aria-label="Tanya AI SYARVA">
-            <span class="grid size-6.5 place-items-center rounded-full bg-white/10 text-white">
-                <x-icon name="sparkles" class="size-3.5 text-slate-200"/>
+                class="group flex items-center gap-2 rounded-full border border-slate-200/90 bg-white/95 px-3.5 py-1.5 text-xs font-semibold text-slate-700 shadow-md backdrop-blur-sm transition-all duration-200 hover:border-slate-300 hover:bg-white hover:text-slate-900 active:scale-95"
+                :class="open ? 'ring-2 ring-slate-900 bg-slate-900 text-white' : ''"
+                aria-label="Buka Asisten Virtual SYARVA">
+            <span class="grid size-5 place-items-center rounded-full" :class="open ? 'bg-white/20 text-white' : 'bg-slate-100 text-slate-600'">
+                <x-icon name="sparkles" class="size-3"/>
             </span>
-            <div class="text-left">
-                <span class="block text-[11px] sm:text-xs font-bold text-white leading-tight">Tanya AI</span>
-                <span class="block text-[9px] text-slate-400 font-medium leading-none mt-0.5">Asisten Listing</span>
-            </div>
-            <span class="size-1.5 rounded-full bg-emerald-400"></span>
+            <span class="text-[11px] font-bold" :class="open ? 'text-white' : 'text-slate-700'">Asisten Virtual</span>
+            <span class="size-1.5 rounded-full bg-emerald-500"></span>
         </button>
     </div>
 
@@ -169,7 +167,7 @@ document.addEventListener('alpine:init', () => {
         messages: [
             {
                 role: 'assistant',
-                content: 'Halo! Saya **SYARVA AI Assistant** 🤖. Saya siap membantu Anda mencari rumah/tanah impian, mobil Honda baru & bekas bergaransi, menghitung simulasi kredit, hingga informasi paket iklan. Ada yang bisa saya bantu hari ini?',
+                content: @json($welcomeMessage),
                 recommendations: []
             }
         ],
@@ -183,7 +181,7 @@ document.addEventListener('alpine:init', () => {
             this.messages = [
                 {
                     role: 'assistant',
-                    content: 'Halo! Percakapan baru telah dimulai. Mau cari properti atau mobil Honda apa hari ini?',
+                    content: @json($welcomeMessage),
                     recommendations: []
                 }
             ];
@@ -244,7 +242,7 @@ document.addEventListener('alpine:init', () => {
             } catch (err) {
                 this.messages.push({
                     role: 'assistant',
-                    content: 'Maaf, gagal terhubung ke server AI. Mohon periksa koneksi internet Anda.',
+                    content: 'Maaf, terjadi kendala saat memproses permintaan. Silakan coba kembali atau hubungi konsultan kami langsung melalui WhatsApp.',
                     recommendations: []
                 });
             } finally {

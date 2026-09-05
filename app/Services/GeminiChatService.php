@@ -221,7 +221,7 @@ PROMPT;
         } elseif (Str::contains($msgLower, ['pasang', 'titip', 'iklan', 'jual', 'biaya'])) {
             $reply = "Untuk titip jual atau memasang unit properti (rumah/tanah) dan mobil di SYARVA, prosesnya sangat mudah dan langsung dibantu oleh Admin kami via WhatsApp.\n\nSilakan langsung hubungi **WhatsApp Admin di {$siteWa}** untuk mengirimkan foto dan spesifikasi unit Anda agar segera ditayangkan!";
         } else {
-            $reply = "Halo! Saya **SYARVA AI Assistant** 🤖. Saya siap membantu Anda menemukan properti impian (Rumah & Tanah) atau mobil idaman (Honda Baru & Bekas), menghitung simulasi DP/kredit, hingga bantuan titip jual unit.\n\nAda yang bisa saya bantu rekomendasikan untuk Anda hari ini?";
+            $reply = "Halo! Saya **SYARVA Assistant**. Saya siap membantu Anda menemukan properti impian (Rumah & Tanah), mobil idaman (Honda Baru & Bekas bergaransi), simulasi kredit/DP OTR, hingga konsultasi titip jual unit.\n\nAda yang bisa saya bantu rekomendasikan untuk Anda hari ini?";
         }
 
         return [

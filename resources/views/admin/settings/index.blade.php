@@ -334,14 +334,14 @@
                     <input type="text" id="contact_whatsapp" name="contact_whatsapp" value="{{ old('contact_whatsapp', $settings['contact_whatsapp'] ?? '') }}" maxlength="30" class="input" placeholder="08xxxxxxxxxx">
                 </div>
             @elseif ($section === 'ai')
-                <div class="rounded-2xl border border-primary-200 bg-gradient-to-br from-primary-50/50 to-white p-5 space-y-4">
-                    <div class="flex items-center gap-3">
-                        <span class="grid size-10 place-items-center rounded-xl bg-primary-600 text-white shadow-sm">
+                <div class="rounded-2xl border border-slate-200 bg-white p-5 space-y-4 shadow-xs">
+                    <div class="flex items-center gap-3 border-b border-slate-100 pb-4">
+                        <span class="grid size-10 place-items-center rounded-xl bg-slate-900 text-white shadow-xs">
                             <x-icon name="sparkles" class="size-5"/>
                         </span>
                         <div>
                             <h3 class="text-sm font-bold text-slate-900">Konfigurasi Google Gemini LLM</h3>
-                            <p class="text-xs text-slate-500">Koneksikan chatbot asisten dengan AI Google Gemini untuk pencarian cerdas &amp; rekomendasi listing otomatis.</p>
+                            <p class="text-xs text-slate-500">Integrasi model bahasa untuk chatbot asisten pencarian unit dan simulasi pembiayaan.</p>
                         </div>
                     </div>
 
@@ -373,7 +373,7 @@
                     <div>
                         <label for="ai_welcome_message" class="label">Pesan Sambutan Awal Chatbot</label>
                         <textarea id="ai_welcome_message" name="ai_welcome_message" rows="3" maxlength="500" class="input text-xs"
-                                  placeholder="Halo! Saya SYARVA AI Assistant. Ada yang bisa saya bantu rekomendasikan hari ini?">{{ old('ai_welcome_message', $settings['ai_welcome_message'] ?? '') }}</textarea>
+                                  placeholder="Halo! Saya asisten virtual SYARVA. Butuh bantuan mencari unit mobil Honda, info properti SHM, atau simulasi kredit?">{{ old('ai_welcome_message', $settings['ai_welcome_message'] ?? '') }}</textarea>
                     </div>
                 </div>
             @else

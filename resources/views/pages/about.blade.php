@@ -115,11 +115,11 @@
                     </div>
 
                     <div class="rounded-2xl border border-slate-200/80 bg-white p-5 sm:p-6 shadow-xs hover:border-slate-300 transition-all">
-                        <span class="grid size-11 place-items-center rounded-xl bg-slate-900 text-white">
-                            <x-icon name="sparkles" class="size-5"/>
+                        <span class="grid size-11 place-items-center rounded-xl bg-blue-50 text-blue-600">
+                            <x-icon name="calculator" class="size-5.5"/>
                         </span>
-                        <h3 class="mt-4 text-sm sm:text-base font-bold text-slate-900">SYARVA AI Assistant</h3>
-                        <p class="mt-1 text-xs leading-relaxed text-slate-500">Rekomendasi unit dan pencarian listing real-time berbasis asisten cerdas.</p>
+                        <h3 class="mt-4 text-sm sm:text-base font-bold text-slate-900">Simulasi Finansial &amp; DP</h3>
+                        <p class="mt-1 text-xs leading-relaxed text-slate-500">Perhitungan rincian DP, angsuran kredit OTR resmi, dan estimasi biaya transaksi yang transparan.</p>
                     </div>
                 </div>
             </div>

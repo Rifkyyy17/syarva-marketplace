@@ -2,31 +2,34 @@
     <x-slot:title>Paket &amp; Biaya Pasang Iklan</x-slot:title>
     <x-slot:description>Pilihan paket iklan properti dan otomotif terbaik untuk perorangan, agen profesional, dan dealer resmi.</x-slot:description>
 
-    <div class="bg-gradient-to-b from-slate-900 to-slate-800 py-16 sm:py-24 text-white">
-        <div class="container-app text-center">
-            <span class="inline-flex items-center gap-2 rounded-full border border-primary-400/30 bg-primary-500/10 px-4 py-1.5 text-xs font-semibold text-primary-200">
-                <x-icon name="sparkles" class="size-3.5"/>
-                Monetisasi &amp; Membership Listing
+    {{-- Header --}}
+    <section class="relative overflow-hidden border-b border-white/10 bg-[#090e1a] py-14 sm:py-20 text-white">
+        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_-10%,rgba(220,38,38,0.12),rgba(9,14,26,0))]"></div>
+
+        <div class="container-app relative text-center max-w-3xl mx-auto">
+            <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-3.5 py-1 text-xs font-semibold text-slate-300 backdrop-blur-sm mb-4">
+                <x-icon name="tag" class="size-3.5 text-red-500"/>
+                Paket Pemasaran &amp; Listing
             </span>
-            <h1 class="mt-4 text-3xl font-extrabold tracking-tight sm:text-5xl">
-                Tingkatkan Penjualan Anda Bersama <span class="text-accent-400">SYARVA</span>
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-black tracking-tight text-white">
+                Pilihan Paket Pasang Iklan <span class="text-red-500">Terarah</span>
             </h1>
-            <p class="mx-auto mt-4 max-w-2xl text-sm leading-relaxed text-slate-300 sm:text-base">
-                Pilih paket iklan yang sesuai dengan kebutuhan bisnis Anda. Jangkau ribuan calon pembeli potensial di seluruh Indonesia dengan fitur premium dan prioritas pencarian.
+            <p class="mx-auto mt-4 max-w-2xl text-xs sm:text-sm leading-relaxed text-slate-400">
+                Pilih paket promosi unit properti atau kendaraan Anda. Dapatkan prioritas pencarian, badge listing terverifikasi, dan integrasi komunikasi direct WhatsApp.
             </p>
         </div>
-    </div>
+    </section>
 
-    <section class="container-app -mt-10 pb-20">
+    <section class="container-app -mt-8 pb-20 relative z-10">
         <div class="grid gap-8 lg:grid-cols-3 items-stretch">
             @foreach ($plans as $plan)
-                <div class="relative flex flex-col justify-between rounded-3xl border bg-white p-8 shadow-xl transition-all duration-300 hover:-translate-y-1.5
-                    {{ $plan->is_featured ? 'border-2 border-primary-600 ring-4 ring-primary-100 shadow-primary-900/10' : 'border-slate-200 shadow-slate-200/50' }}">
+                <div class="relative flex flex-col justify-between rounded-3xl border bg-white p-8 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:shadow-md
+                    {{ $plan->is_featured ? 'border-2 border-red-600 ring-4 ring-red-500/10' : 'border-slate-200/80' }}">
 
                     @if ($plan->badge_label)
                         <div class="absolute -top-3.5 right-6">
                             <span class="rounded-full px-3.5 py-1 text-xs font-bold uppercase tracking-wider
-                                {{ $plan->is_featured ? 'bg-primary-600 text-white shadow-md' : 'bg-slate-800 text-white' }}">
+                                {{ $plan->is_featured ? 'bg-red-600 text-white shadow-md' : 'bg-slate-900 text-white' }}">
                                 {{ $plan->badge_label }}
                             </span>
                         </div>
@@ -71,7 +74,7 @@
                             </a>
                         @else
                             <a href="https://wa.me/{{ $adminWhatsappClean }}?text={{ urlencode($waMsg) }}" target="_blank" rel="noopener"
-                               class="btn w-full py-3! text-center font-bold {{ $plan->is_featured ? 'btn-primary' : 'bg-slate-900 text-white hover:bg-slate-800' }}">
+                               class="btn w-full py-3! text-center font-bold justify-center {{ $plan->is_featured ? 'btn-honda' : 'bg-slate-900 text-white hover:bg-slate-800' }}">
                                 <x-icon name="whatsapp" class="size-4.5"/> Beli / Upgrade Paket
                             </a>
                         @endif

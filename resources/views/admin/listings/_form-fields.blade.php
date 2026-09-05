@@ -9,25 +9,25 @@
 <div x-data="listingForm({{ $categoryOptions->toJson() }}, '{{ (string) $old('category_id') }}', '{{ csrf_token() }}', '{{ route('admin.listings.parse-brochure') }}')"
      x-on:submit="prepareSubmit($event)">
 
-    {{-- AI Smart PDF Auto-Fill Card (Highlighted at the Top for Honda / Mobil Baru) --}}
-    <div class="card mb-6 border-2 border-primary-300 bg-gradient-to-br from-primary-900 via-primary-950 to-charcoal-900 p-6 sm:p-7 text-white shadow-xl"
+    {{-- Ekstraksi Brosur PDF Honda (Auto-Fill Spesifikasi) --}}
+    <div class="card mb-6 border border-slate-800 bg-[#090e1a] p-6 sm:p-7 text-white shadow-xl"
          x-show="categoryType === 'vehicle' && (categorySlug === 'mobil-baru' || categorySlug.includes('honda'))"
          x-cloak
          x-transition>
         <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div class="space-y-1.5">
-                <div class="inline-flex items-center gap-2 rounded-full border border-accent-400/30 bg-accent-400/10 px-3 py-1 text-xs font-bold text-accent-300">
-                    <x-icon name="sparkles" class="size-3.5 text-accent-400 animate-pulse"/>
-                    Fitur AI Smart PDF Auto-Fill
+                <div class="inline-flex items-center gap-2 rounded-full border border-red-500/30 bg-red-500/10 px-3 py-1 text-xs font-bold text-red-400">
+                    <x-icon name="upload" class="size-3.5 text-red-500"/>
+                    Auto-Fill Brosur PDF Honda
                 </div>
-                <h3 class="text-xl font-extrabold tracking-tight text-white">Upload Brosur PDF Honda (Otomatis Terisi)</h3>
-                <p class="text-xs text-slate-300 max-w-xl leading-relaxed">
-                    Unggah file PDF brosur resmi mobil Honda apa pun. AI akan menganalisis dokumen dan mengekstrak foto halaman serta otomatis mengisi spesifikasi teknis lengkap unit!
+                <h3 class="text-lg sm:text-xl font-extrabold tracking-tight text-white">Ekstraksi Otomatis Brosur PDF Honda</h3>
+                <p class="text-xs text-slate-400 max-w-xl leading-relaxed">
+                    Unggah file PDF brosur resmi mobil Honda. Sistem akan mengekstrak foto halaman secara otomatis serta melengkapi spesifikasi teknis dan fitur keselamatan unit.
                 </p>
             </div>
 
             <div class="shrink-0 flex flex-col sm:flex-row items-stretch sm:items-center gap-3">
-                <label class="cursor-pointer inline-flex items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-accent-500 to-amber-500 hover:from-accent-600 hover:to-amber-600 px-5 py-3 text-xs font-black text-charcoal-950 shadow-lg shadow-accent-500/20 transition-all hover:scale-105">
+                <label class="cursor-pointer inline-flex items-center justify-center gap-2 rounded-xl bg-red-600 hover:bg-red-700 px-5 py-2.5 text-xs font-bold text-white shadow-md transition-all hover:scale-102">
                     <template x-if="!parsingPdf">
                         <span class="inline-flex items-center gap-2">
                             <x-icon name="upload" class="size-4.5"/> Pilih File Brosur PDF
@@ -35,8 +35,8 @@
                     </template>
                     <template x-if="parsingPdf">
                         <span class="inline-flex items-center gap-2">
-                            <svg class="size-4.5 animate-spin text-charcoal-950" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
-                            Menganalisis Brosur PDF...
+                            <svg class="size-4.5 animate-spin text-white" viewBox="0 0 24 24" fill="none"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>
+                            Mengekstrak Brosur PDF...
                         </span>
                     </template>
                     <input type="file" accept="application/pdf" class="sr-only" :disabled="parsingPdf"
@@ -45,31 +45,29 @@
             </div>
         </div>
 
-
-
         {{-- Success State Notification --}}
-        <div x-show="pdfParseSuccess" x-cloak class="mt-4 rounded-xl border border-emerald-500/40 bg-emerald-500/20 p-3.5 text-xs font-semibold text-emerald-200 flex items-center justify-between gap-3">
+        <div x-show="pdfParseSuccess" x-cloak class="mt-4 rounded-xl border border-emerald-500/30 bg-emerald-500/15 p-3.5 text-xs font-semibold text-emerald-300 flex items-center justify-between gap-3">
             <span class="flex items-center gap-2">
                 <x-icon name="check-badge" class="size-4.5 text-emerald-400 shrink-0"/>
-                🎉 Brosur PDF berhasil dianalisis! Judul, spesifikasi, dan foto galeri telah terisi otomatis di bawah.
+                Brosur PDF berhasil dianalisis. Judul, spesifikasi, dan foto galeri telah terisi otomatis di bawah.
             </span>
             <button type="button" @click="pdfParseSuccess = false" class="text-emerald-300 hover:text-white">&times;</button>
         </div>
 
-        {{-- Extracted Images Preview Directly Inside Top AI Card --}}
-        <div x-show="extractedImages.length" x-cloak class="mt-5 rounded-2xl border border-white/20 bg-white/10 p-4 backdrop-blur-md">
+        {{-- Extracted Images Preview Directly Inside Top Card --}}
+        <div x-show="extractedImages.length" x-cloak class="mt-5 rounded-2xl border border-white/10 bg-white/[0.04] p-4 backdrop-blur-md">
             <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
                 <span class="inline-flex items-center gap-2 text-xs font-bold text-white">
-                    <x-icon name="sparkles" class="size-4 text-accent-400"/>
-                    📸 Foto Halaman Brosur Berhasil Diekstrak (<span x-text="extractedImages.length"></span> Gambar)
+                    <x-icon name="image" class="size-4 text-slate-300"/>
+                    Foto Halaman Brosur Berhasil Diekstrak (<span x-text="extractedImages.length"></span> Gambar)
                 </span>
-                <span class="rounded-full bg-emerald-500/30 border border-emerald-400/40 px-2.5 py-0.5 text-[10px] font-extrabold text-emerald-300">
+                <span class="rounded-full bg-emerald-500/20 border border-emerald-400/30 px-2.5 py-0.5 text-[10px] font-extrabold text-emerald-300">
                     Siap Disimpan Sebagai Galeri
                 </span>
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-8 gap-2.5">
                 <template x-for="(img, idx) in extractedImages" :key="img.path">
-                    <div class="group relative overflow-hidden rounded-xl border border-white/20 bg-charcoal-950/80 shadow-md">
+                    <div class="group relative overflow-hidden rounded-xl border border-white/10 bg-slate-900 shadow-md">
                         <div class="aspect-[4/3] bg-slate-800">
                             <img :src="img.url" alt="" class="size-full object-cover group-hover:scale-105 transition duration-300">
                         </div>
@@ -376,16 +374,15 @@
     </div>
 
     {{-- Khusus Kategori Honda (Mobil Baru): Aset & Fitur Tambahan --}}
-    {{-- Khusus Kategori Honda (Mobil Baru): Aset & Fitur Tambahan --}}
-    <div class="card mt-6 border-2 border-red-100 bg-gradient-to-b from-white to-red-50/20 p-6 sm:p-8 shadow-sm"
+    <div class="card mt-6 border border-slate-200 bg-white p-6 sm:p-8 shadow-xs rounded-2xl"
          x-show="categoryType === 'vehicle' && (categorySlug === 'mobil-baru' || categorySlug.includes('honda'))"
          style="display: none;"
          x-cloak
          x-transition>
-        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-red-100 pb-4">
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 border-b border-slate-100 pb-4">
             <div>
-                <span class="inline-flex items-center gap-1.5 rounded-full bg-red-100 px-2.5 py-0.5 text-xs font-bold text-red-700">
-                    <x-icon name="sparkles" class="size-3 text-red-600"/> Spesifikasi Resmi Honda
+                <span class="inline-flex items-center gap-1.5 rounded-full bg-red-50 border border-red-200/80 px-2.5 py-0.5 text-xs font-bold text-red-700">
+                    <x-icon name="check-badge" class="size-3 text-red-600"/> Spesifikasi Resmi Honda
                 </span>
                 <h2 class="mt-2 text-lg font-extrabold text-slate-900">4. Spesifikasi Lengkap &amp; Brosur Honda</h2>
                 <p class="text-xs text-slate-500">Atur dokumen e-brosur PDF, paket hemat perawatan, promo dealer, dan checklist fitur teknologi Honda Sensing.</p>
@@ -399,7 +396,7 @@
                         document.querySelectorAll('input[name=\'honda_features[]\']').forEach(el => el.checked = true);
                     "
                     class="btn-outline btn-xs self-start sm:self-auto !border-red-300 !text-red-700 hover:!bg-red-50 shrink-0">
-                <x-icon name="sparkles" class="size-3.5"/> Isi Otomatis Template Honda
+                <x-icon name="refresh" class="size-3.5"/> Isi Otomatis Template Honda
             </button>
         </div>
 
@@ -640,13 +637,13 @@
         </div>
 
         {{-- Extracted Images from PDF Gallery Grid --}}
-        <div x-show="extractedImages.length" x-cloak class="mt-5 rounded-2xl border border-primary-200 bg-primary-50/50 p-4">
+        <div x-show="extractedImages.length" x-cloak class="mt-5 rounded-2xl border border-slate-200 bg-slate-50/60 p-4">
             <div class="flex items-center justify-between gap-2 mb-3">
-                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-primary-900">
-                    <x-icon name="sparkles" class="size-3.5 text-primary-600"/>
+                <span class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-900">
+                    <x-icon name="image" class="size-3.5 text-slate-600"/>
                     Foto Halaman Brosur PDF (<span x-text="extractedImages.length"></span> Foto)
                 </span>
-                <span class="text-[11px] text-primary-700">Tersimpan saat listing disimpan</span>
+                <span class="text-[11px] text-slate-500">Tersimpan saat listing disimpan</span>
             </div>
             <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
                 <template x-for="(img, idx) in extractedImages" :key="img.path">

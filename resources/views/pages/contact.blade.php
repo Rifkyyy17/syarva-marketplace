@@ -221,11 +221,11 @@
 
                 <div class="rounded-2xl bg-slate-50 p-5 border border-slate-100">
                     <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2">
-                        <x-icon name="sparkles" class="size-4 text-accent-600"/>
-                        Konsultasi AI 24 Jam
+                        <x-icon name="calendar" class="size-4 text-primary-600"/>
+                        Jadwal Survey &amp; Test Drive
                     </h3>
                     <p class="mt-2 text-xs leading-relaxed text-slate-600">
-                        Manfaatkan fitur widget <strong>Tanya AI SYARVA</strong> di pojok kanan bawah untuk rekomendasi unit dan tanya jawab instan tanpa jeda.
+                        Ingin melihat langsung fisik properti atau menjadwalkan test drive mobil Honda? Hubungi konsultan kami untuk penyesuaian jadwal kunjungan Anda.
                     </p>
                 </div>
             </div>
