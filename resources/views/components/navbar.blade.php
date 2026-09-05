@@ -2,7 +2,7 @@
     $categories = \App\Models\Category::active()->whereNull('parent_id')->with('children')->orderBy('sort_order')->get();
 @endphp
 
-<header class="sticky top-0 z-40 border-b border-white/[0.08] bg-[#090e1a]/90 backdrop-blur-xl text-white transition-all" x-data="mobileMenu">
+<header class="sticky top-0 z-40 border-b border-white/10 bg-[#0a1626]/95 backdrop-blur-xl text-white transition-all" x-data="mobileMenu">
     <nav class="container-app flex h-16 items-center justify-between gap-4" aria-label="Navigasi utama">
         @php
             $siteLogo = \App\Models\Setting::get('site_logo');
@@ -190,7 +190,7 @@
          x-transition:leave="transition ease-in duration-150"
          x-transition:leave-start="opacity-100 translate-y-0"
          x-transition:leave-end="opacity-0 -translate-y-2"
-         class="border-t border-white/10 bg-[#090e1a]/95 backdrop-blur-xl lg:hidden" x-cloak>
+         class="border-t border-white/10 bg-[#0a1626]/98 backdrop-blur-xl lg:hidden" x-cloak>
         <div class="container-app space-y-1 py-4">
             <a href="{{ route('home') }}" class="flex items-center gap-3 rounded-xl px-4 py-2.5 text-xs font-semibold text-slate-200 hover:bg-white/10">
                 <x-icon name="home" class="size-4 text-slate-400"/> Home

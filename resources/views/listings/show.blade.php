@@ -384,8 +384,8 @@
             {{-- Right Column: Sticky Booking & Direct Deal Sidebar --}}
             <aside class="space-y-5 lg:sticky lg:top-24 lg:self-start">
                 <div class="rounded-3xl border border-slate-200 bg-white shadow-sm overflow-hidden">
-                    {{-- Header Card (Obsidian Showroom Slate) --}}
-                    <div class="relative overflow-hidden bg-[#090e1a] p-6 text-white">
+                    {{-- Header Card (Dark Navy Blue) --}}
+                    <div class="relative overflow-hidden bg-[#0a1626] p-6 text-white">
                         <p class="text-[11px] font-bold uppercase tracking-wider text-slate-400">Harga Penawaran</p>
                         <p class="mt-1.5 text-3xl sm:text-4xl font-black tracking-tight text-white">
                             Rp {{ number_format((float) $listing->price, 0, ',', '.') }}

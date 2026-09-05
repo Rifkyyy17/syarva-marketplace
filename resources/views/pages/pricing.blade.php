@@ -3,8 +3,8 @@
     <x-slot:description>Pilihan paket iklan properti dan otomotif terbaik untuk perorangan, agen profesional, dan dealer resmi.</x-slot:description>
 
     {{-- Header --}}
-    <section class="relative overflow-hidden border-b border-white/10 bg-[#090e1a] py-14 sm:py-20 text-white">
-        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_-10%,rgba(220,38,38,0.12),rgba(9,14,26,0))]"></div>
+    <section class="relative overflow-hidden border-b border-white/10 bg-[#0a1626] py-14 sm:py-20 text-white">
+        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_-10%,rgba(37,99,235,0.18),rgba(10,22,38,0))]"></div>
 
         <div class="container-app relative text-center max-w-3xl mx-auto">
             <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-3.5 py-1 text-xs font-semibold text-slate-300 backdrop-blur-sm mb-4">

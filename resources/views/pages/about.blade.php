@@ -8,8 +8,8 @@
     @endphp
 
     {{-- Hero Header --}}
-    <section class="relative overflow-hidden border-b border-white/10 bg-[#090e1a] py-16 sm:py-24 text-white">
-        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_-10%,rgba(220,38,38,0.12),rgba(9,14,26,0))]"></div>
+    <section class="relative overflow-hidden border-b border-white/10 bg-[#0a1626] py-16 sm:py-24 text-white">
+        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_-10%,rgba(37,99,235,0.18),rgba(10,22,38,0))]"></div>
 
         <div class="container-app relative text-center max-w-3xl mx-auto">
             <span class="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.04] px-3.5 py-1 text-xs font-semibold text-slate-300 backdrop-blur-sm mb-6">
@@ -127,7 +127,7 @@
     </section>
 
     {{-- Vision & Mission --}}
-    <section class="border-y border-white/10 bg-[#090e1a] py-16 text-white">
+    <section class="border-y border-white/10 bg-[#0a1626] py-16 text-white">
         <div class="container-app">
             <div class="mx-auto max-w-3xl text-center">
                 <span class="inline-block text-[10px] font-bold uppercase tracking-[0.08em] text-slate-400">
@@ -178,8 +178,8 @@
 
     {{-- CTA Bottom --}}
     <section class="container-app py-14 sm:py-18">
-        <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-[#090e1a] px-6 py-12 text-center text-white sm:px-12 sm:py-16">
-            <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_120%,rgba(220,38,38,0.2),rgba(9,14,26,0))]"></div>
+        <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-[#0a1626] px-6 py-12 text-center text-white sm:px-12 sm:py-16">
+            <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_120%,rgba(37,99,235,0.22),rgba(10,22,38,0))]"></div>
 
             <div class="relative max-w-xl mx-auto">
                 <h2 class="text-2xl sm:text-3xl font-black tracking-tight text-white">

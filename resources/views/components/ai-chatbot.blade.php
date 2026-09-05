@@ -32,7 +32,7 @@
          class="fixed bottom-18 sm:bottom-20 right-4 sm:right-6 z-50 w-[calc(100vw-2rem)] sm:w-[400px] max-h-[620px] h-[80vh] sm:h-[580px] flex flex-col rounded-3xl border border-slate-200 bg-white shadow-2xl overflow-hidden ring-1 ring-black/5">
 
         {{-- Header --}}
-        <div class="flex items-center justify-between border-b border-white/10 bg-[#090e1a] px-4 sm:px-5 py-3.5 text-white">
+        <div class="flex items-center justify-between border-b border-white/10 bg-[#0a1626] px-4 sm:px-5 py-3.5 text-white">
             <div class="flex items-center gap-3">
                 <span class="grid size-8 place-items-center rounded-xl bg-white/10 text-white">
                     <x-icon name="sparkles" class="size-4 text-slate-200"/>

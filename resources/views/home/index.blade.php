@@ -8,9 +8,9 @@
     <x-slot:description>{{ \App\Models\Setting::get('site_tagline') }}</x-slot:description>
 
     {{-- Hero Section --}}
-    <section class="relative overflow-hidden bg-[#090e1a] text-white border-b border-white/[0.08]">
-        {{-- Subtle Ambient Radial Highlight (No tacky neon blur circles) --}}
-        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_-10%,rgba(220,38,38,0.15),rgba(9,14,26,0))]"></div>
+    <section class="relative overflow-hidden bg-[#0a1626] text-white border-b border-white/10">
+        {{-- Subtle Ambient Radial Highlight --}}
+        <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_-10%,rgba(37,99,235,0.2),rgba(10,22,38,0))]"></div>
 
         <div class="container-app relative py-14 sm:py-20 lg:py-24">
             <div class="grid items-center gap-12 lg:grid-cols-12">
@@ -188,7 +188,7 @@
     </section>
 
     {{-- Asymmetric Dual Service Hub (Otomotif & Properti) --}}
-    <section class="border-b border-white/10 bg-[#090e1a] py-14 sm:py-20 text-white">
+    <section class="border-b border-white/10 bg-[#0a1626] py-14 sm:py-20 text-white">
         <div class="container-app">
             <div class="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
                 <div>
@@ -354,8 +354,8 @@
 
     {{-- Bottom Showroom CTA Banner --}}
     <section class="container-app py-14 sm:py-18">
-        <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-[#090e1a] px-6 py-12 text-center text-white sm:px-12 sm:py-16">
-            <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_120%,rgba(220,38,38,0.2),rgba(9,14,26,0))]"></div>
+        <div class="relative overflow-hidden rounded-3xl border border-white/10 bg-[#0a1626] px-6 py-12 text-center text-white sm:px-12 sm:py-16">
+            <div class="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_60%_50%_at_50%_120%,rgba(37,99,235,0.22),rgba(10,22,38,0))]"></div>
 
             <div class="relative max-w-xl mx-auto">
                 <span class="inline-block rounded-full border border-white/15 bg-white/[0.05] px-3.5 py-1 text-[11px] font-bold uppercase tracking-wider text-slate-300">

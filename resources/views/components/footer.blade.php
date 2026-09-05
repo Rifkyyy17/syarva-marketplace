@@ -15,7 +15,7 @@
     ];
 @endphp
 
-<footer class="mt-auto border-t border-slate-200 bg-[#090e1a] text-white">
+<footer class="mt-auto border-t border-slate-200/80 bg-[#0a1626] text-white">
     <div class="container-app py-12 lg:py-16">
         <div class="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
             {{-- Column 1: Brand & Bio --}}
@@ -115,7 +115,7 @@
         </div>
     </div>
 
-    <div class="border-t border-white/[0.06] bg-[#04070e]">
+    <div class="border-t border-white/10 bg-[#050d18]">
         <div class="container-app flex flex-col items-center justify-between gap-3 py-4 text-[11px] text-slate-500 sm:flex-row">
             <p>&copy; {{ date('Y') }} {{ $siteName }}. Hak cipta dilindungi undang-undang.</p>
             <p class="flex items-center gap-3">

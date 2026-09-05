@@ -7,7 +7,7 @@
     <x-slot:description>Layanan konsultasi properti: titip jual atau cari rumah impian Anda.</x-slot:description>
 
     {{-- Page Header --}}
-    <section class="border-b border-white/10 bg-[#090e1a] py-14 text-white">
+    <section class="border-b border-white/10 bg-[#0a1626] py-14 text-white">
         <div class="container-app text-center max-w-2xl mx-auto">
             <span class="inline-flex items-center gap-1.5 rounded-full border border-emerald-500/30 bg-emerald-500/10 px-3.5 py-1 text-xs font-semibold text-emerald-300">
                 <x-icon name="building" class="size-3.5 text-emerald-400"/>

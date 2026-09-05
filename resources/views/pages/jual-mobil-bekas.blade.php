@@ -7,7 +7,7 @@
     <x-slot:description>Jual mobil bekas Anda dengan mudah. Isi data singkat, dapatkan taksasi harga via WhatsApp.</x-slot:description>
 
     {{-- Page Header --}}
-    <section class="border-b border-white/10 bg-[#090e1a] py-14 text-white">
+    <section class="border-b border-white/10 bg-[#0a1626] py-14 text-white">
         <div class="container-app text-center max-w-2xl mx-auto">
             <span class="inline-flex items-center gap-1.5 rounded-full border border-amber-500/30 bg-amber-500/10 px-3.5 py-1 text-xs font-semibold text-amber-300">
                 <x-icon name="car-back" class="size-3.5 text-amber-400"/>

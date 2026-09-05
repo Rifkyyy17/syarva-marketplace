@@ -10,7 +10,7 @@
      x-on:submit="prepareSubmit($event)">
 
     {{-- Ekstraksi Brosur PDF Honda (Auto-Fill Spesifikasi) --}}
-    <div class="card mb-6 border border-slate-800 bg-[#090e1a] p-6 sm:p-7 text-white shadow-xl"
+    <div class="card mb-6 border border-slate-700/80 bg-[#0a1626] p-6 sm:p-7 text-white shadow-xl"
          x-show="categoryType === 'vehicle' && (categorySlug === 'mobil-baru' || categorySlug.includes('honda'))"
          x-cloak
          x-transition>
